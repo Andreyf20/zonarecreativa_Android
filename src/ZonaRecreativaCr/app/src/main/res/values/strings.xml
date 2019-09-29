@@ -1,12 +1,21 @@
 <resources>
     <string name="app_name">ZonaRecreativaCr</string>
-    <string name="title_activity_admin_main">Portal Administrador</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="app_name_">Zona Recreativa Cr</string>
+    <string name="email">Correo electrónico</string>
+    <string name="password">Contraseña</string>
+    <string name="loginButton"> Iniciar Sesión </string>
+    <string name="validEmail">Ingrese un correo válido</string>
+    <string name="validPassword">Ingrese una contraseña válida</string>
+    <string name="fieldsEmpty">Los campos deben rellenarse</string>
+    <string name="connectionError">Error de conexión</string>
+    <string name="retry">Reintentar</string>
+    <string name="accountCreated">Cuenta creada exitosamente</string>
+    <string name="invalidCredentials">Revisar los credenciales</string>
+    <string name="adminPackages">Paquetes</string>
+    <string name="adminInsurance">Seguros Laborales</string>
+    <string name="adminMeals">Planes alimenticios</string>
+    <string name="adminMedicalStaff">Personal Médico</string>
+    <string name="adminTransport">Transporte</string>
+    <string name="adminNewAdmin">Crear nuevo admin</string>
+    <string name="logout">Salir</string>
 </resources>

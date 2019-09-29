@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "311140447739",
+    "firebase_url": "https://zona-recreativa-cr.firebaseio.com",
+    "project_id": "zona-recreativa-cr",
+    "storage_bucket": "zona-recreativa-cr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:311140447739:android:d5918d522797dfda08875e",
+        "android_client_info": {
+          "package_name": "com.zona.recreativacr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "311140447739-gbd741jo50but1sj46fsmjenrvgq0rbq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4aOgly3L5uuVRM85VGEYHp6YrLc9p_2I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "311140447739-gbd741jo50but1sj46fsmjenrvgq0rbq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
