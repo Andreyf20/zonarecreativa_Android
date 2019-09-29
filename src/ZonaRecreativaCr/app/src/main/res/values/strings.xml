@@ -17,5 +17,7 @@
     <string name="adminMedicalStaff">Personal Médico</string>
     <string name="adminTransport">Transporte</string>
     <string name="adminNewAdmin">Crear nuevo admin</string>
+    <string name="newAdminCreated">Nuevo Admin creado</string>
+    <string name="newAdminError">Ocurrió un error al crear el nuevo admin</string>
     <string name="logout">Salir</string>
 </resources>

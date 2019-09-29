@@ -7,14 +7,11 @@ import androidx.core.content.ContextCompat;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,39 +19,29 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity {
+public class NewAdminActivity extends AppCompatActivity {
 
     EditText emailET, passwordET;
-    Button loginBtn;
-    ProgressBar loginPB;
+    Button createBtn;
+    ProgressBar createPB;
     Snackbar snackbar;
     FirebaseAuth mFirebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_new_admin);
+        this.setTitle(R.string.adminNewAdmin);
 
         emailET = findViewById(R.id.admin_email_text);
         passwordET = findViewById(R.id.admin_password_text);
-        loginBtn = findViewById(R.id.create_admin_button);
-        loginPB = findViewById(R.id.login_progressBar);
-
-        passwordET.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginBtn.performClick();
-                    return true;
-                }
-                return false;
-            }
-        });
+        createBtn = findViewById(R.id.create_admin_button);
+        createPB = findViewById(R.id.create_admin_progressBar);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
     }
 
-    public void login(final View view) {
+    public void createNewAdmin(final View view){
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(passwordET.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
 
@@ -71,29 +58,36 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if ((!(email.isEmpty()) && !(password.isEmpty()))){
-            loginBtn.setEnabled(false);
-            loginPB.setVisibility(View.VISIBLE);
+            createBtn.setEnabled(false);
+            createPB.setVisibility(View.VISIBLE);
 
-            mFirebaseAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+            mFirebaseAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(NewAdminActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()) {
-                                Intent i = new Intent(getBaseContext(), HomeActivity.class);
-                                startActivity(i);
+                                snackbar = Snackbar.make(view, R.string.newAdminCreated,
+                                        Snackbar.LENGTH_LONG);
                                 emailET.setText("");
                                 passwordET.setText("");
-                                emailET.requestFocus();
                             }else{
                                 snackbar = Snackbar.make(view, R.string.invalidCredentials,
                                         Snackbar.LENGTH_LONG);
-                                View snackbarView = snackbar.getView();
-                                snackbarView.setBackgroundColor(ContextCompat.getColor(getBaseContext(),
-                                        R.color.LightBlueDark));
-                                snackbar.show();
+                                snackbar.setAction(R.string.retry, new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        createNewAdmin(view);
+                                    }
+                                });
+                                snackbar.setActionTextColor(ContextCompat.getColor(getBaseContext(),
+                                        R.color.Pink));
                             }
-                            loginPB.setVisibility(View.GONE);
-                            loginBtn.setEnabled(true);
+                            View snackbarView = snackbar.getView();
+                            snackbarView.setBackgroundColor(ContextCompat.getColor(getBaseContext(),
+                                    R.color.LightBlueDark));
+                            snackbar.show();
+                            createPB.setVisibility(View.GONE);
+                            createBtn.setEnabled(true);
                         }
                     });
         }
