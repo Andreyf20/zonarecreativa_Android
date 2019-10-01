@@ -17,6 +17,7 @@
         android:background="@drawable/rounded_corners"
         android:text="@string/adminInsurance"
         android:textColor="@color/White"
+        android:onClick="goToEmployee"
         app:layout_constraintBottom_toTopOf="@+id/medical_staff_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

@@ -8,9 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class HomeActivity extends AppCompatActivity {
     Button packagesBtn, insuranceBtn, mealBtn, medicalBtn, transportBtn, logoutBtn;
-
 
 
     @Override
@@ -26,12 +27,18 @@ public class HomeActivity extends AppCompatActivity {
         logoutBtn = findViewById(R.id.logout_button);
     }
 
+    public void goToEmployee(View view){
+        Intent i = new Intent(getBaseContext(), EmployeesActivity.class);
+        startActivity(i);
+    }
+
     public void goToNewAdmin(View view){
         Intent i = new Intent(getBaseContext(), NewAdminActivity.class);
         startActivity(i);
     }
 
     public void logout(View view){
+        FirebaseAuth.getInstance().signOut();
         this.finish();
     }
 }

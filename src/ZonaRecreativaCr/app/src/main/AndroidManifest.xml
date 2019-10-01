@@ -11,7 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".NewAdminActivity"></activity>
+        <activity android:name=".EmployeesActivity"></activity>
+        <activity android:name=".PackagesActivity" />
+        <activity android:name=".NewAdminActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
