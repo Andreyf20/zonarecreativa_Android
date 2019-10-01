@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/name_textView"
+        android:id="@+id/employee_name_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -20,48 +20,49 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/id_textView"
+        android:id="@+id/employee_id_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="295dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
         android:text="Cedula"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/name_textView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/insurance_textView"
+        android:id="@+id/employee_insurance_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="20dp"
         android:text="NumeroSeguro"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/employee_name_textView" />
 
     <TextView
-        android:id="@+id/expire_textView"
+        android:id="@+id/employee_expire_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp"
         android:text="Vence"
-        android:textSize="18sp"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/insurance_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/employee_insurance_textView" />
 
     <TextView
-        android:id="@+id/vigencia_textView"
+        android:id="@+id/employee_vigencia_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="284dp"
-        android:layout_marginTop="75dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="5dp"
         android:text="Vigencia"
-        android:textSize="18sp"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/expire_textView"
-        app:layout_constraintTop_toBottomOf="@+id/id_textView" />
+        app:layout_constraintStart_toEndOf="@+id/employee_expire_textView"
+        app:layout_constraintTop_toBottomOf="@+id/employee_id_textView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

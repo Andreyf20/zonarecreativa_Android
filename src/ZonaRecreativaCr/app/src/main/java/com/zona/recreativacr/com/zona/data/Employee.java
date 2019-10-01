@@ -14,4 +14,7 @@ public class Employee {
         this.vige = vige;
         this.vence = vence;
     }
+
+    public Employee() {
+    }
 }

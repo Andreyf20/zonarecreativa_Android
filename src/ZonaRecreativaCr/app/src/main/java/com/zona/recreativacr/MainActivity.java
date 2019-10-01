@@ -97,5 +97,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
         }
+        /*Intent i = new Intent(getBaseContext(), HomeActivity.class);
+        startActivity(i);*/
     }
 }
