@@ -12,10 +12,7 @@ import com.zona.recreativacr.com.zona.data.MealPlan;
 import com.zona.recreativacr.com.zona.data.MedicalStaff;
 import com.zona.recreativacr.com.zona.data.Transport;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -38,6 +35,7 @@ public class RecyclerViewConfig {
         DividerItemDecoration dividerItemDecoration =
                 new DividerItemDecoration(recyclerView.getContext(),
                         layoutManager.getOrientation());
+        dividerItemDecoration.setDrawable(mContext.getResources().getDrawable(R.drawable.recyclerview_divider));
         recyclerView.addItemDecoration(dividerItemDecoration);
     }
 
@@ -114,6 +112,7 @@ public class RecyclerViewConfig {
         DividerItemDecoration dividerItemDecoration =
                 new DividerItemDecoration(recyclerView.getContext(),
                         layoutManager.getOrientation());
+        dividerItemDecoration.setDrawable(mContext.getResources().getDrawable(R.drawable.recyclerview_divider));
         recyclerView.addItemDecoration(dividerItemDecoration);
     }
 
@@ -182,6 +181,7 @@ public class RecyclerViewConfig {
         DividerItemDecoration dividerItemDecoration =
                 new DividerItemDecoration(recyclerView.getContext(),
                         layoutManager.getOrientation());
+        dividerItemDecoration.setDrawable(mContext.getResources().getDrawable(R.drawable.recyclerview_divider));
         recyclerView.addItemDecoration(dividerItemDecoration);
     }
 
@@ -259,6 +259,7 @@ public class RecyclerViewConfig {
         DividerItemDecoration dividerItemDecoration =
                 new DividerItemDecoration(recyclerView.getContext(),
                         layoutManager.getOrientation());
+        dividerItemDecoration.setDrawable(mContext.getResources().getDrawable(R.drawable.recyclerview_divider));
         recyclerView.addItemDecoration(dividerItemDecoration);
     }
 
