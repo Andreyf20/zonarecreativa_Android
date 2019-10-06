@@ -32,6 +32,21 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void goToTransport(View view){
+        Intent i = new Intent(getBaseContext(), TransportsActivity.class);
+        startActivity(i);
+    }
+
+    public void goToMealPlan(View view){
+        Intent i = new Intent(getBaseContext(), MealPlansActivity.class);
+        startActivity(i);
+    }
+
+    public void goToMedicalStaff(View view){
+        Intent i = new Intent(getBaseContext(), MedicalStaffsActivity.class);
+        startActivity(i);
+    }
+
     public void goToNewAdmin(View view){
         Intent i = new Intent(getBaseContext(), NewAdminActivity.class);
         startActivity(i);

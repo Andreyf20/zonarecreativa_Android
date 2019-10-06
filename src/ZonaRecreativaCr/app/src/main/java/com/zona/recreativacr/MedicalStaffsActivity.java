@@ -7,50 +7,40 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.zona.recreativacr.com.zona.data.Employee;
+import com.zona.recreativacr.com.zona.data.MealPlan;
+import com.zona.recreativacr.com.zona.data.MedicalStaff;
 import com.zona.recreativacr.com.zona.recyclerview.RecyclerViewConfig;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeesActivity extends AppCompatActivity {
+public class MedicalStaffsActivity extends AppCompatActivity {
 
-    RecyclerView employeeRV;
+    RecyclerView medicalStaffRV;
     FirebaseFirestore mDatabase;
-    Task<QuerySnapshot> employeeQuerySnapshot;
-    List<Employee> employees = new ArrayList<>();
-
+    Task<QuerySnapshot> medicalStaffQuerySnapshot;
+    List<MedicalStaff> medicalStaffs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_employees);
-        employeeRV = findViewById(R.id.employee_recyclerView);
+        setContentView(R.layout.activity_medical_staffs);
+        medicalStaffRV = findViewById(R.id.medicalstaff_recyclerView);
 
-        this.setTitle("Seguros laborales");
+        this.setTitle("Personal Médico");
 
-
-        readEmployees(new DataStatus<Employee>() {
+        readMedicalStaffs(new DataStatus<MedicalStaff>() {
             @Override
-            public void DataIsLoaded(List<Employee> employees) {
-                findViewById(R.id.employee_progressBar).setVisibility(View.GONE);
-                new RecyclerViewConfig().setConfigEmployee(employeeRV, getBaseContext(),
-                        employees);
+            public void DataIsLoaded(List<MedicalStaff> list) {
+                findViewById(R.id.medicalstaff_progressBar).setVisibility(View.GONE);
+                new RecyclerViewConfig().setConfigMedicalStaff(medicalStaffRV, getBaseContext(),
+                        medicalStaffs);
             }
 
             @Override
@@ -68,25 +58,23 @@ public class EmployeesActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
-    public void readEmployees (final DataStatus dataStatus) {
+    public void readMedicalStaffs (final DataStatus dataStatus) {
         mDatabase = FirebaseFirestore.getInstance();
-        employeeQuerySnapshot = mDatabase.collection("Empleados")
+        medicalStaffQuerySnapshot = mDatabase.collection("PersonalMedico")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()) {
                             for(QueryDocumentSnapshot document : task.getResult()) {
-                                employees.add(document.toObject(Employee.class));
+                                medicalStaffs.add(document.toObject(MedicalStaff.class));
                             }
                             //Log.d("Empleado", employees.get(0).nombre);
-                            dataStatus.DataIsLoaded(employees);
+                            dataStatus.DataIsLoaded(medicalStaffs);
                         } else {
-                            Log.d("Empleado", "Task not successful");
+                            Log.d("Comida", "Task not successful");
                         }
                     }
                 });

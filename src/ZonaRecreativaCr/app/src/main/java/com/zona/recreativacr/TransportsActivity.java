@@ -7,50 +7,41 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.zona.recreativacr.com.zona.data.Employee;
+import com.zona.recreativacr.com.zona.data.Transport;
 import com.zona.recreativacr.com.zona.recyclerview.RecyclerViewConfig;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeesActivity extends AppCompatActivity {
+public class TransportsActivity extends AppCompatActivity {
 
-    RecyclerView employeeRV;
+    RecyclerView transportRV;
     FirebaseFirestore mDatabase;
-    Task<QuerySnapshot> employeeQuerySnapshot;
-    List<Employee> employees = new ArrayList<>();
-
+    Task<QuerySnapshot> transportQuerySnapshot;
+    List<Transport> transports = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_employees);
-        employeeRV = findViewById(R.id.employee_recyclerView);
+        setContentView(R.layout.activity_transports);
 
-        this.setTitle("Seguros laborales");
+        transportRV = findViewById(R.id.transport_recyclerView);
 
+        this.setTitle("Transporte");
 
-        readEmployees(new DataStatus<Employee>() {
+        readTransports(new DataStatus<Transport>() {
             @Override
-            public void DataIsLoaded(List<Employee> employees) {
-                findViewById(R.id.employee_progressBar).setVisibility(View.GONE);
-                new RecyclerViewConfig().setConfigEmployee(employeeRV, getBaseContext(),
-                        employees);
+            public void DataIsLoaded(List<Transport> list) {
+                findViewById(R.id.transport_progressBar).setVisibility(View.GONE);
+                new RecyclerViewConfig().setConfigTransport(transportRV, getBaseContext(),
+                        transports);
             }
 
             @Override
@@ -68,25 +59,23 @@ public class EmployeesActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
-    public void readEmployees (final DataStatus dataStatus) {
+    public void readTransports (final DataStatus dataStatus) {
         mDatabase = FirebaseFirestore.getInstance();
-        employeeQuerySnapshot = mDatabase.collection("Empleados")
+        transportQuerySnapshot = mDatabase.collection("Transportes")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()) {
                             for(QueryDocumentSnapshot document : task.getResult()) {
-                                employees.add(document.toObject(Employee.class));
+                                transports.add(document.toObject(Transport.class));
                             }
                             //Log.d("Empleado", employees.get(0).nombre);
-                            dataStatus.DataIsLoaded(employees);
+                            dataStatus.DataIsLoaded(transports);
                         } else {
-                            Log.d("Empleado", "Task not successful");
+                            Log.d("Transporte", "Task not successful");
                         }
                     }
                 });

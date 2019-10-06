@@ -11,11 +11,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".EmployeesActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".PackagesActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".NewAdminActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".HomeActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".MainActivity" android:screenOrientation="portrait">
+        <activity android:name=".TransportsActivity"></activity>
+        <activity android:name=".MedicalStaffsActivity" />
+        <activity android:name=".MealPlansActivity" />
+        <activity
+            android:name=".EmployeesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PackagesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NewAdminActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

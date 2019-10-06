@@ -7,50 +7,40 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.zona.recreativacr.com.zona.data.Employee;
+import com.zona.recreativacr.com.zona.data.MealPlan;
 import com.zona.recreativacr.com.zona.recyclerview.RecyclerViewConfig;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeesActivity extends AppCompatActivity {
+public class MealPlansActivity extends AppCompatActivity {
 
-    RecyclerView employeeRV;
+    RecyclerView mealplanRV;
     FirebaseFirestore mDatabase;
-    Task<QuerySnapshot> employeeQuerySnapshot;
-    List<Employee> employees = new ArrayList<>();
-
+    Task<QuerySnapshot> mealplanQuerySnapshot;
+    List<MealPlan> mealplans = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_employees);
-        employeeRV = findViewById(R.id.employee_recyclerView);
+        setContentView(R.layout.activity_meal_plans);
+        mealplanRV = findViewById(R.id.mealplan_recyclerView);
 
-        this.setTitle("Seguros laborales");
+        this.setTitle("Planes alimenticios");
 
-
-        readEmployees(new DataStatus<Employee>() {
+        readMealPlans(new DataStatus<MealPlan>() {
             @Override
-            public void DataIsLoaded(List<Employee> employees) {
-                findViewById(R.id.employee_progressBar).setVisibility(View.GONE);
-                new RecyclerViewConfig().setConfigEmployee(employeeRV, getBaseContext(),
-                        employees);
+            public void DataIsLoaded(List<MealPlan> list) {
+                findViewById(R.id.mealplan_progressBar).setVisibility(View.GONE);
+                new RecyclerViewConfig().setConfigMealPlan(mealplanRV, getBaseContext(),
+                        mealplans);
             }
 
             @Override
@@ -70,23 +60,24 @@ public class EmployeesActivity extends AppCompatActivity {
         });
 
 
+
     }
 
-    public void readEmployees (final DataStatus dataStatus) {
+    public void readMealPlans (final DataStatus dataStatus) {
         mDatabase = FirebaseFirestore.getInstance();
-        employeeQuerySnapshot = mDatabase.collection("Empleados")
+        mealplanQuerySnapshot = mDatabase.collection("Comidas")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()) {
                             for(QueryDocumentSnapshot document : task.getResult()) {
-                                employees.add(document.toObject(Employee.class));
+                                mealplans.add(document.toObject(MealPlan.class));
                             }
                             //Log.d("Empleado", employees.get(0).nombre);
-                            dataStatus.DataIsLoaded(employees);
+                            dataStatus.DataIsLoaded(mealplans);
                         } else {
-                            Log.d("Empleado", "Task not successful");
+                            Log.d("Comida", "Task not successful");
                         }
                     }
                 });
