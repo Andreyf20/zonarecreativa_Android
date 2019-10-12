@@ -20,4 +20,17 @@
     <string name="newAdminCreated">Nuevo Admin creado</string>
     <string name="newAdminError">Ocurrió un error al crear el nuevo admin</string>
     <string name="logout">Salir</string>
+    <string name="addEmployeeBtn">Agregar nuevo empleado</string>
+    <string name="addTransport">Agregar nuevo transporte</string>
+    <string name="employeeName">Nombre</string>
+    <string name="employeeInsurance">Número de seguro</string>
+    <string name="employeeId">Cédula</string>
+    <string name="employeeVence">Vence</string>
+    <string name="employeeVige">Vige</string>
+    <string name="sendButton">Enviar</string>
+    <string name="okCreated">Se creó correctamente</string>
+    <string name="errorCreated">Ocurrió un error al crearlo</string>
+    <string name="phoneNumber">Número de teléfono</string>
+    <string name="price">Precio</string>
+    <string name="description">Descripción</string>
 </resources>

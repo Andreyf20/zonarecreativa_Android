@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,10 +28,12 @@ import com.zona.recreativacr.com.zona.recyclerview.RecyclerViewConfig;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class EmployeesActivity extends AppCompatActivity {
 
     RecyclerView employeeRV;
+    ProgressBar employeePB;
     FirebaseFirestore mDatabase;
     Task<QuerySnapshot> employeeQuerySnapshot;
     List<Employee> employees = new ArrayList<>();
@@ -41,6 +44,7 @@ public class EmployeesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employees);
         employeeRV = findViewById(R.id.employee_recyclerView);
+        employeePB = findViewById(R.id.employee_progressBar);
 
         this.setTitle("Seguros laborales");
 
@@ -48,7 +52,7 @@ public class EmployeesActivity extends AppCompatActivity {
         readEmployees(new DataStatus<Employee>() {
             @Override
             public void DataIsLoaded(List<Employee> employees) {
-                findViewById(R.id.employee_progressBar).setVisibility(View.GONE);
+                employeePB.setVisibility(View.GONE);
                 new RecyclerViewConfig().setConfigEmployee(employeeRV, getBaseContext(),
                         employees);
             }
@@ -91,4 +95,10 @@ public class EmployeesActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    public void goToAddEmployee(View view){
+        Intent i = new Intent(getBaseContext(), EmployeesAddActivity.class);
+        startActivity(i);
+    }
+
 }

@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".EmployeesActivity">
 
+    <Button
+        android:id="@+id/addEmployee_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/addEmployeeBtn"
+        android:background="@drawable/rounded_corners"
+        android:textColor="@color/White"
+        android:onClick="goToAddEmployee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/employee_recyclerView" />
+
     <ProgressBar
         android:id="@+id/employee_progressBar"
         style="?android:attr/progressBarStyle"

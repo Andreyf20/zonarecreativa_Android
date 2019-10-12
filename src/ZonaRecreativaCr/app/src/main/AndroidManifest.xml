@@ -11,7 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".TransportsActivity"></activity>
+        <activity android:name=".TransportsAddActivity"></activity>
+        <activity android:name=".EmployeesAddActivity" />
+        <activity android:name=".TransportsActivity" />
         <activity android:name=".MedicalStaffsActivity" />
         <activity android:name=".MealPlansActivity" />
         <activity
