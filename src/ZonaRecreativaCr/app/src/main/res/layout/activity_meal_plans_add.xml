@@ -4,83 +4,105 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EmployeesAddActivity">
+    tools:context=".MealPlansAddActivity">
 
     <Button
-        android:id="@+id/employeeAdd_button"
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:background="@drawable/rounded_corners"
-        android:onClick="addEmployee"
         android:text="@string/sendButton"
         android:textColor="@color/White"
+        android:onClick="addMealPlan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vige_editText" />
+        app:layout_constraintTop_toBottomOf="@+id/meriendaCena_mp_editText" />
 
     <EditText
-        android:id="@+id/numeroSeguro_editText"
+        android:id="@+id/desayuno_mp_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:ems="10"
-        android:hint="@string/employeeInsurance"
-        android:inputType="number"
+        android:hint="@string/breakfast"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nombre_editText" />
+        app:layout_constraintTop_toBottomOf="@+id/nombre_mp_editText" />
 
     <EditText
-        android:id="@+id/cedula_editText"
+        android:id="@+id/meriendaDes_mp_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:ems="10"
-        android:hint="@string/employeeId"
-        android:inputType="number"
+        android:hint="@string/breakfastSnack"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numeroSeguro_editText" />
+        app:layout_constraintTop_toBottomOf="@+id/desayuno_mp_editText" />
 
     <EditText
-        android:id="@+id/vence_editText"
+        android:id="@+id/almuerzo_mp_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:ems="10"
-        android:hint="@string/employeeVence"
-        android:inputType="none"
-        android:editable="false"
-        android:focusable="false"
+        android:hint="@string/lunch"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cedula_editText" />
+        app:layout_constraintTop_toBottomOf="@+id/meriendaDes_mp_editText" />
 
     <EditText
-        android:id="@+id/vige_editText"
+        android:id="@+id/meriendaAlm_mp_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:ems="10"
-        android:hint="@string/employeeVige"
-        android:inputType="none"
-        android:editable="false"
-        android:focusable="false"
+        android:hint="@string/lunchSnack"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vence_editText" />
+        app:layout_constraintTop_toBottomOf="@+id/almuerzo_mp_editText" />
 
     <EditText
-        android:id="@+id/nombre_editText"
+        android:id="@+id/cena_mp_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="126dp"
+        android:layout_marginTop="35dp"
+        android:ems="10"
+        android:hint="@string/dinner"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/meriendaAlm_mp_editText" />
+
+    <EditText
+        android:id="@+id/meriendaCena_mp_editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:ems="10"
+        android:hint="@string/dinnerSnack"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cena_mp_editText" />
+
+    <EditText
+        android:id="@+id/nombre_mp_editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
         android:ems="10"
         android:hint="@string/employeeName"
         android:inputType="textPersonName"
@@ -90,7 +112,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
-        android:id="@+id/employeeAdd_progressBar"
+        android:id="@+id/mpAdd_progressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="384dp"
         android:layout_height="30dp"
@@ -100,5 +122,4 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -78,5 +79,10 @@ public class MedicalStaffsActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    public void goToAddMedicalStaff(View view){
+        Intent i = new Intent(getBaseContext(), MedicalStaffsAddActivity.class);
+        startActivity(i);
     }
 }

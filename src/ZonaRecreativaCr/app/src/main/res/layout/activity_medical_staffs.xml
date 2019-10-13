@@ -7,6 +7,20 @@
     android:layout_height="match_parent"
     tools:context=".MedicalStaffsActivity">
 
+    <Button
+        android:id="@+id/msAdd_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="@string/addMedicalStaff"
+        android:background="@drawable/rounded_corners"
+        android:textColor="@color/White"
+        android:onClick="goToAddMedicalStaff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/medicalstaff_recyclerView" />
+
     <ProgressBar
         android:id="@+id/medicalstaff_progressBar"
         style="?android:attr/progressBarStyle"

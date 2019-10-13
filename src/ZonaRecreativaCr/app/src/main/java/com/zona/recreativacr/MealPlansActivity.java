@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -81,5 +82,10 @@ public class MealPlansActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    public void goToAddMealPlan(View view){
+        Intent i = new Intent(getBaseContext(), MealPlansAddActivity.class);
+        startActivity(i);
     }
 }

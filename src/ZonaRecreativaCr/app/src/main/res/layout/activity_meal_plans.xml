@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".MealPlansActivity">
 
+    <Button
+        android:id="@+id/addMealPlan_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="@string/addMealPlan"
+        android:background="@drawable/rounded_corners"
+        android:textColor="@color/White"
+        android:onClick="goToAddMealPlan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mealplan_recyclerView" />
+
     <ProgressBar
         android:id="@+id/mealplan_progressBar"
         style="?android:attr/progressBarStyle"

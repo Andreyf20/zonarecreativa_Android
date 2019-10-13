@@ -1,6 +1,8 @@
 <resources>
+    <!--General app date-->
     <string name="app_name">ZonaRecreativaCr</string>
     <string name="app_name_">Zona Recreativa Cr</string>
+    <!--Login strings-->
     <string name="email">Correo electrónico</string>
     <string name="password">Contraseña</string>
     <string name="loginButton"> Iniciar Sesión </string>
@@ -9,24 +11,38 @@
     <string name="fieldsEmpty">Los campos deben rellenarse</string>
     <string name="connectionError">Error de conexión</string>
     <string name="retry">Reintentar</string>
+    <!--New Admin strings-->
     <string name="accountCreated">Cuenta creada exitosamente</string>
     <string name="invalidCredentials">Revisar los credenciales</string>
+    <string name="newAdminCreated">Nuevo Admin creado</string>
+    <string name="newAdminError">Ocurrió un error al crear el nuevo admin</string>
+    <!--Admin Home Activity strings-->
     <string name="adminPackages">Paquetes</string>
     <string name="adminInsurance">Seguros Laborales</string>
     <string name="adminMeals">Planes alimenticios</string>
     <string name="adminMedicalStaff">Personal Médico</string>
     <string name="adminTransport">Transporte</string>
     <string name="adminNewAdmin">Crear nuevo admin</string>
-    <string name="newAdminCreated">Nuevo Admin creado</string>
-    <string name="newAdminError">Ocurrió un error al crear el nuevo admin</string>
     <string name="logout">Salir</string>
+    <!--Admin add new ... strings-->
     <string name="addEmployeeBtn">Agregar nuevo empleado</string>
     <string name="addTransport">Agregar nuevo transporte</string>
+    <string name="addMealPlan">Agregar nuevo plan alimenticio</string>
+    <string name="addMedicalStaff">Agregar nuevo personal médico</string>
+    <!--Employee strings-->
     <string name="employeeName">Nombre</string>
     <string name="employeeInsurance">Número de seguro</string>
     <string name="employeeId">Cédula</string>
     <string name="employeeVence">Vence</string>
     <string name="employeeVige">Vige</string>
+    <!--MealPlans strings-->
+    <string name="breakfast">Desayuno</string>
+    <string name="breakfastSnack">Merienda del desayuno</string>
+    <string name="lunch">Almuerzo</string>
+    <string name="lunchSnack">Merienda del almuerzo</string>
+    <string name="dinner">Cena</string>
+    <string name="dinnerSnack">Merienda de la cena</string>
+    <!--General purpose-->
     <string name="sendButton">Enviar</string>
     <string name="okCreated">Se creó correctamente</string>
     <string name="errorCreated">Ocurrió un error al crearlo</string>
