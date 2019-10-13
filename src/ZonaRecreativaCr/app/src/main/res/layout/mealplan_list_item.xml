@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:clickable="true"
+    android:background="@drawable/recyclerview_ripple">
 
     <TextView
         android:id="@+id/mealplan_name_textView"
