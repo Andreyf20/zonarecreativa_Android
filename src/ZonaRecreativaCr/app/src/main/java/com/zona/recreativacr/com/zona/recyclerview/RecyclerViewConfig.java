@@ -199,9 +199,10 @@ public class RecyclerViewConfig {
     MealPlan config settings
      */
 
-    public void setConfigMealPlan(RecyclerView recyclerView, Context context, List<MealPlan> mealplans){
+    public void setConfigMealPlan(RecyclerView recyclerView, Context context, List<MealPlan> mealplans,
+                                  IClickListener listener){
         mContext = context;
-        MealPlanAdapter mMealPlantAdapter = new MealPlanAdapter(mealplans);
+        MealPlanAdapter mMealPlantAdapter = new MealPlanAdapter(mealplans, listener);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mMealPlantAdapter);
@@ -212,12 +213,16 @@ public class RecyclerViewConfig {
         recyclerView.addItemDecoration(dividerItemDecoration);
     }
 
-    class MealPlanItemView extends  RecyclerView.ViewHolder {
+    class MealPlanItemView extends  RecyclerView.ViewHolder implements View.OnClickListener
+    {
         TextView nameTV, desayunoTV, meriendaDesayunoTV, almuerzoTV, meriendaAlmuerzoTV, cenaTV, meriendaCenaTV;
+        IClickListener listener;
 
-        MealPlanItemView(ViewGroup parent) {
-            super(LayoutInflater.from(mContext)
-                    .inflate(R.layout.mealplan_list_item, parent, false));
+        MealPlanItemView(View itemView, IClickListener listener) {
+            super(itemView);
+
+            this.listener = listener;
+            itemView.setOnClickListener(this);
 
             nameTV = itemView.findViewById(R.id.mealplan_name_textView);
             desayunoTV = itemView.findViewById(R.id.mealplan_desayuno_textView);
@@ -247,19 +252,28 @@ public class RecyclerViewConfig {
             cenaTV.setText(cena);
             meriendaCenaTV.setText(meriendaCena);
         }
+
+        @Override
+        public void onClick(View v) {
+            listener.OnClickObject(getAdapterPosition());
+        }
     }
 
     class MealPlanAdapter extends RecyclerView.Adapter<MealPlanItemView> {
         private List<MealPlan> mMealPlans;
+        private IClickListener listener;
 
-        public MealPlanAdapter(List<MealPlan> mealPlans) {
+        public MealPlanAdapter(List<MealPlan> mealPlans, IClickListener listener) {
             this.mMealPlans = mealPlans;
+            this.listener = listener;
         }
 
         @NonNull
         @Override
         public MealPlanItemView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new MealPlanItemView(parent);
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.mealplan_list_item, parent, false);
+            return new MealPlanItemView(view, listener);
         }
 
         @Override
@@ -277,9 +291,10 @@ public class RecyclerViewConfig {
     MedicalStaff config settings
      */
 
-    public void setConfigMedicalStaff(RecyclerView recyclerView, Context context, List<MedicalStaff> medicalstaffs){
+    public void setConfigMedicalStaff(RecyclerView recyclerView, Context context, List<MedicalStaff> medicalstaffs,
+                                      IClickListener listener){
         mContext = context;
-        MedicalStaffAdapter mMedicalStaffAdapter = new MedicalStaffAdapter(medicalstaffs);
+        MedicalStaffAdapter mMedicalStaffAdapter = new MedicalStaffAdapter(medicalstaffs, listener);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mMedicalStaffAdapter);
@@ -290,12 +305,16 @@ public class RecyclerViewConfig {
         recyclerView.addItemDecoration(dividerItemDecoration);
     }
 
-    class MedicalStaffItemView extends RecyclerView.ViewHolder {
+    class MedicalStaffItemView extends RecyclerView.ViewHolder implements View.OnClickListener
+    {
         TextView nameTV, descriptionTV, phoneNumberTV;
+        IClickListener listener;
 
-        MedicalStaffItemView(ViewGroup parent) {
-            super(LayoutInflater.from(mContext)
-                    .inflate(R.layout.medicalstaff_list_item, parent, false));
+        MedicalStaffItemView(View itemView, IClickListener listener) {
+            super(itemView);
+
+            this.listener = listener;
+            itemView.setOnClickListener(this);
 
             nameTV = itemView.findViewById(R.id.medicalstaff_name_textView);
             descriptionTV = itemView.findViewById(R.id.medicalstaff_descripcion_textView);
@@ -311,19 +330,28 @@ public class RecyclerViewConfig {
             descriptionTV.setText(medicalStaff.descripcion);
             phoneNumberTV.setText(phoneNumber);
         }
+
+        @Override
+        public void onClick(View v) {
+            listener.OnClickObject(getAdapterPosition());
+        }
     }
 
     class MedicalStaffAdapter extends RecyclerView.Adapter<MedicalStaffItemView> {
         private List<MedicalStaff> mMedicalStaffs;
+        private IClickListener listener;
 
-        public MedicalStaffAdapter(List<MedicalStaff> medicalStaffs) {
+        public MedicalStaffAdapter(List<MedicalStaff> medicalStaffs, IClickListener listener) {
             this.mMedicalStaffs = medicalStaffs;
+            this.listener = listener;
         }
 
         @NonNull
         @Override
         public MedicalStaffItemView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new MedicalStaffItemView(parent);
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.medicalstaff_list_item, parent, false);
+            return new MedicalStaffItemView(view, listener);
         }
 
         @Override

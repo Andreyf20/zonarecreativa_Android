@@ -1,21 +1,28 @@
 package com.zona.recreativacr;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.zona.recreativacr.com.zona.data.Employee;
 import com.zona.recreativacr.com.zona.data.MealPlan;
+import com.zona.recreativacr.com.zona.recyclerview.IClickListener;
 import com.zona.recreativacr.com.zona.recyclerview.RecyclerViewConfig;
 
 import java.util.ArrayList;
@@ -27,11 +34,20 @@ public class MealPlansActivity extends AppCompatActivity {
     FirebaseFirestore mDatabase;
     Task<QuerySnapshot> mealplanQuerySnapshot;
     List<MealPlan> mealplans = new ArrayList<>();
+    View contentView;
+
+    IClickListener listener = new IClickListener() {
+        @Override
+        public void OnClickObject(int position) {
+            MealPlansActivity.this.clickObject(position);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_plans);
+        contentView = findViewById(android.R.id.content);
         mealplanRV = findViewById(R.id.mealplan_recyclerView);
 
         this.setTitle("Planes alimenticios");
@@ -41,7 +57,7 @@ public class MealPlansActivity extends AppCompatActivity {
             public void DataIsLoaded(List<MealPlan> list) {
                 findViewById(R.id.mealplan_progressBar).setVisibility(View.GONE);
                 new RecyclerViewConfig().setConfigMealPlan(mealplanRV, getBaseContext(),
-                        mealplans);
+                        mealplans, listener);
             }
 
             @Override
@@ -87,5 +103,53 @@ public class MealPlansActivity extends AppCompatActivity {
     public void goToAddMealPlan(View view){
         Intent i = new Intent(getBaseContext(), MealPlansAddActivity.class);
         startActivity(i);
+    }
+
+    private void deleteMealPlan(int position){
+        mDatabase.collection("Comidas")
+                .document(mealplans.get(position).id)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Snackbar snackbar;
+                        snackbar = Snackbar.make(contentView, R.string.okDeleted,
+                                Snackbar.LENGTH_LONG);
+                        View snackbarView = snackbar.getView();
+                        snackbarView.setBackgroundColor(ContextCompat.getColor(getBaseContext(),
+                                R.color.LightBlueDark));
+                        snackbar.show();
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Snackbar snackbar;
+                snackbar = Snackbar.make(contentView, R.string.errorDeleted,
+                        Snackbar.LENGTH_LONG);
+                View snackbarView = snackbar.getView();
+                snackbarView.setBackgroundColor(ContextCompat.getColor(getBaseContext(),
+                        R.color.LightBlueDark));
+                snackbar.show();
+            }
+        });
+    }
+
+    public void clickObject(final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        String[] options = {"Actualizar", "Eliminar"};
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(which == 0) {
+                    Intent intent = new Intent(getBaseContext(), MealPlansAddActivity.class);
+                    intent.putExtra("mealplan", mealplans.get(position));
+                    startActivity(intent);
+                }
+                else if(which == 1) {
+                    deleteMealPlan(position);
+                }
+            }
+        }).create().show();
     }
 }
