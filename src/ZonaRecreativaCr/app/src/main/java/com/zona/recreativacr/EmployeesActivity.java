@@ -118,8 +118,7 @@ public class EmployeesActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void deleteEmployee(int position){
-        final Snackbar[] snackbar = new Snackbar[1];
+    private void deleteEmployee(int position){
         mDatabase.collection("Empleados")
                 .document(employees.get(position).id)
                 .delete()

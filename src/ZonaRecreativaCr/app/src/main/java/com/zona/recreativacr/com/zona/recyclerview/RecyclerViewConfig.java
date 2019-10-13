@@ -50,11 +50,8 @@ public class RecyclerViewConfig {
         EmployeeItemView(View itemView, IClickListener listener) {
             super(itemView);
 
-
             this.listener = listener;
-
             itemView.setOnClickListener(this);
-
 
             nameTV = itemView.findViewById(R.id.employee_name_textView);
             idTV = itemView.findViewById(R.id.employee_id_textView);
@@ -121,9 +118,10 @@ public class RecyclerViewConfig {
     Transport config settings
      */
 
-    public void setConfigTransport(RecyclerView recyclerView, Context context, List<Transport> transports){
+    public void setConfigTransport(RecyclerView recyclerView, Context context, List<Transport> transports,
+                                   IClickListener listener){
         mContext = context;
-        TransportAdapter mTransportAdapter = new TransportAdapter(transports);
+        TransportAdapter mTransportAdapter = new TransportAdapter(transports, listener);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mTransportAdapter);
@@ -134,12 +132,15 @@ public class RecyclerViewConfig {
         recyclerView.addItemDecoration(dividerItemDecoration);
     }
 
-    class TransportItemView extends RecyclerView.ViewHolder {
+    class TransportItemView extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView nameTV, descriptionTV, priceTV, phoneNumberTV;
+        IClickListener listener;
 
-        TransportItemView(ViewGroup parent) {
-            super(LayoutInflater.from(mContext)
-                    .inflate(R.layout.transport_list_item, parent, false));
+        TransportItemView(View itemView, IClickListener listener) {
+            super(itemView);
+
+            this.listener = listener;
+            itemView.setOnClickListener(this);
 
             nameTV = itemView.findViewById(R.id.transport_name_textView);
             descriptionTV = itemView.findViewById(R.id.transport_descripcion_textView);
@@ -160,19 +161,27 @@ public class RecyclerViewConfig {
             phoneNumberTV.setText(phoneNumber);
         }
 
+        @Override
+        public void onClick(View v) {
+            listener.OnClickObject(getAdapterPosition());
+        }
     }
 
     class TransportAdapter extends RecyclerView.Adapter<TransportItemView> {
         private List<Transport> mTransports;
+        private IClickListener listener;
 
-        public TransportAdapter(List<Transport> transports) {
+        public TransportAdapter(List<Transport> transports, IClickListener listener) {
             this.mTransports = transports;
+            this.listener = listener;
         }
 
         @NonNull
         @Override
         public TransportItemView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new TransportItemView(parent);
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.transport_list_item, parent, false);
+            return new TransportItemView(view, listener);
         }
 
         @Override

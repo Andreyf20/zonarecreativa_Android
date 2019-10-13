@@ -1,21 +1,28 @@
 package com.zona.recreativacr;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.zona.recreativacr.com.zona.data.Employee;
 import com.zona.recreativacr.com.zona.data.Transport;
+import com.zona.recreativacr.com.zona.recyclerview.IClickListener;
 import com.zona.recreativacr.com.zona.recyclerview.RecyclerViewConfig;
 
 import java.util.ArrayList;
@@ -27,12 +34,20 @@ public class TransportsActivity extends AppCompatActivity {
     FirebaseFirestore mDatabase;
     Task<QuerySnapshot> transportQuerySnapshot;
     List<Transport> transports = new ArrayList<>();
+    View contentView;
+
+    IClickListener listener = new IClickListener() {
+        @Override
+        public void OnClickObject(int position) {
+            TransportsActivity.this.clickObject(position);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transports);
-
+        contentView = findViewById(android.R.id.content);
         transportRV = findViewById(R.id.transport_recyclerView);
 
         this.setTitle("Transporte");
@@ -42,7 +57,7 @@ public class TransportsActivity extends AppCompatActivity {
             public void DataIsLoaded(List<Transport> list) {
                 findViewById(R.id.transport_progressBar).setVisibility(View.GONE);
                 new RecyclerViewConfig().setConfigTransport(transportRV, getBaseContext(),
-                        transports);
+                        transports, listener);
             }
 
             @Override
@@ -85,5 +100,53 @@ public class TransportsActivity extends AppCompatActivity {
     public void goToAddTransport(View view){
         Intent i = new Intent(getBaseContext(), TransportsAddActivity.class);
         startActivity(i);
+    }
+
+    private void deleteTransport(int position){
+        mDatabase.collection("Transportes")
+                .document(transports.get(position).id)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Snackbar snackbar;
+                        snackbar = Snackbar.make(contentView, R.string.okDeleted,
+                                Snackbar.LENGTH_LONG);
+                        View snackbarView = snackbar.getView();
+                        snackbarView.setBackgroundColor(ContextCompat.getColor(getBaseContext(),
+                                R.color.LightBlueDark));
+                        snackbar.show();
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                        Snackbar snackbar;
+                        snackbar = Snackbar.make(contentView, R.string.errorDeleted,
+                                Snackbar.LENGTH_LONG);
+                        View snackbarView = snackbar.getView();
+                        snackbarView.setBackgroundColor(ContextCompat.getColor(getBaseContext(),
+                                R.color.LightBlueDark));
+                        snackbar.show();
+            }
+        });
+    }
+
+    public void clickObject(final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        String[] options = {"Actualizar", "Eliminar"};
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(which == 0) {
+                    Intent intent = new Intent(getBaseContext(), TransportsAddActivity.class);
+                    intent.putExtra("transport", transports.get(position));
+                    startActivity(intent);
+                }
+                else if(which == 1) {
+                    deleteTransport(position);
+                }
+            }
+        }).create().show();
     }
 }
