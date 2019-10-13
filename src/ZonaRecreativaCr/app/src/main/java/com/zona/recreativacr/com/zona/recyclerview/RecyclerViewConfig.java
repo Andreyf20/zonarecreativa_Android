@@ -3,7 +3,9 @@ package com.zona.recreativacr.com.zona.recyclerview;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.zona.recreativacr.R;
@@ -26,9 +28,10 @@ public class RecyclerViewConfig {
     /*
     Employees config settings
      */
-    public void setConfigEmployee(RecyclerView recyclerView, Context context, List<Employee> employees){
+    public void setConfigEmployee(RecyclerView recyclerView, Context context, List<Employee> employees,
+                                  IClickListener listener){
         mContext = context;
-        EmployeeAdapter mEmployeeAdapter = new EmployeeAdapter(employees);
+        EmployeeAdapter mEmployeeAdapter = new EmployeeAdapter(employees, listener);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mEmployeeAdapter);
@@ -39,12 +42,18 @@ public class RecyclerViewConfig {
         recyclerView.addItemDecoration(dividerItemDecoration);
     }
 
-    class EmployeeItemView extends RecyclerView.ViewHolder {
+    class EmployeeItemView extends RecyclerView.ViewHolder implements View.OnClickListener
+    {
         TextView nameTV, idTV, insuranceTV, expireTV, vigeTV;
+        IClickListener listener;
 
-        EmployeeItemView(ViewGroup parent) {
-            super(LayoutInflater.from(mContext)
-            .inflate(R.layout.employee_list_item, parent, false));
+        EmployeeItemView(View itemView, IClickListener listener) {
+            super(itemView);
+
+
+            this.listener = listener;
+
+            itemView.setOnClickListener(this);
 
 
             nameTV = itemView.findViewById(R.id.employee_name_textView);
@@ -73,19 +82,28 @@ public class RecyclerViewConfig {
             expireTV.setText(vence);
             vigeTV.setText(vige);
         }
+
+        @Override
+        public void onClick(View v) {
+            listener.OnClickObject(getAdapterPosition());
+        }
     }
 
     class EmployeeAdapter extends RecyclerView.Adapter<EmployeeItemView> {
         private List<Employee> mEmployees;
+        private IClickListener listener;
 
-        public EmployeeAdapter(List<Employee> employees) {
+        public EmployeeAdapter(List<Employee> employees, IClickListener listener) {
             this.mEmployees = employees;
+            this.listener = listener;
         }
 
         @NonNull
         @Override
         public EmployeeItemView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new EmployeeItemView(parent);
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.employee_list_item, parent, false);
+            return new EmployeeItemView(view, listener);
         }
 
         @Override

@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.zona.recreativacr.com.zona.data.Employee;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,6 +36,7 @@ public class EmployeesAddActivity extends AppCompatActivity {
     FirebaseFirestore mDatabase;
     Date ven;
     Date vig;
+    Employee employee = null;
 
     final int DATE_PICKER_VEN = 0;
     final int DATE_PICKER_VIG = 1;
@@ -103,6 +105,15 @@ public class EmployeesAddActivity extends AppCompatActivity {
                     datePicker.show();
             }
         });
+
+        if(getIntent().hasExtra("employee")) {
+            employee = getIntent().getParcelableExtra("employee");
+            nombre.setText(employee.nombre);
+            numeroSeguro.setText(employee.numeroSeguro);
+            vence.setText(employee.vence.toString());
+            vige.setText(employee.vige.toString());
+            cedula.setText(employee.cedula);
+        }
     }
 
     protected Dialog createDatePickerDialog(int id) {
@@ -126,55 +137,94 @@ public class EmployeesAddActivity extends AppCompatActivity {
 
     public void addEmployee(final View view) {
         //TODO: agregar validaciones
+        mDatabase = FirebaseFirestore.getInstance();
         employeeAddPB.setVisibility(View.VISIBLE);
         String name = nombre.getText().toString();
         String insurance = numeroSeguro.getText().toString();
         Timestamp expire = new Timestamp(ven);
         Timestamp vi = new Timestamp(vig);
         String id = cedula.getText().toString();
-        String idDoc = UUID.randomUUID().toString();
+        // Si es nulo entonces es uno nuevo
+        if(employee == null) {
+            String idDoc = UUID.randomUUID().toString();
 
-        Map<String, Object> docData = new HashMap<>();
-        docData.put("cedula", id);
-        docData.put("id", idDoc);
-        docData.put("nombre", name);
-        docData.put("numeroSeguro", insurance);
-        docData.put("vence", expire);
-        docData.put("vige", vi);
+            Map<String, Object> docData = new HashMap<>();
+            docData.put("cedula", id);
+            docData.put("id", idDoc);
+            docData.put("nombre", name);
+            docData.put("numeroSeguro", insurance);
+            docData.put("vence", expire);
+            docData.put("vige", vi);
 
-        mDatabase = FirebaseFirestore.getInstance();
+            mDatabase.collection("Empleados").document(idDoc).set(docData)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Snackbar snackbar;
+                            snackbar = Snackbar.make(view, R.string.okCreated,
+                                    Snackbar.LENGTH_LONG);
+                            View snackbarView = snackbar.getView();
+                            snackbarView.setBackgroundColor(ContextCompat.getColor(getBaseContext(),
+                                    R.color.LightBlueDark));
+                            snackbar.show();
+                            nombre.setText("");
+                            numeroSeguro.setText("");
+                            vence.setText("");
+                            vige.setText("");
+                            cedula.setText("");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Snackbar snackbar;
+                    snackbar = Snackbar.make(view, R.string.errorCreated,
+                            Snackbar.LENGTH_LONG);
+                    View snackbarView = snackbar.getView();
+                    snackbarView.setBackgroundColor(ContextCompat.getColor(getBaseContext(),
+                            R.color.LightBlueDark));
+                    snackbar.show();
+                    //Log.d("addEmployee", e.toString());
+                }
+            });
 
-        mDatabase.collection("Empleados").document(idDoc).set(docData)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        employeeAddPB.setVisibility(View.GONE);
-                        Snackbar snackbar;
-                        snackbar = Snackbar.make(view, R.string.okCreated,
-                                Snackbar.LENGTH_LONG);
-                        View snackbarView = snackbar.getView();
-                        snackbarView.setBackgroundColor(ContextCompat.getColor(getBaseContext(),
-                                R.color.LightBlueDark));
-                        snackbar.show();
-                        nombre.setText("");
-                        numeroSeguro.setText("");
-                        vence.setText("");
-                        vige.setText("");
-                        cedula.setText("");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        employeeAddPB.setVisibility(View.GONE);
-                        Snackbar snackbar;
-                        snackbar = Snackbar.make(view, R.string.errorCreated,
-                                Snackbar.LENGTH_LONG);
-                        View snackbarView = snackbar.getView();
-                        snackbarView.setBackgroundColor(ContextCompat.getColor(getBaseContext(),
-                                R.color.LightBlueDark));
-                        snackbar.show();
-                        //Log.d("addEmployee", e.toString());
-                    }
-        });
+        } // Si no es nulo entonces se esta modificando uno existente
+        else {
+
+            Map<String, Object> docData = new HashMap<>();
+            docData.put("cedula", id);
+            docData.put("id", employee.id);
+            docData.put("nombre", name);
+            docData.put("numeroSeguro", insurance);
+            docData.put("vence", expire);
+            docData.put("vige", vi);
+
+            mDatabase.collection("Empleados").document(employee.id)
+                    .set(docData)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Snackbar snackbar;
+                            snackbar = Snackbar.make(view, R.string.okUpdated,
+                                    Snackbar.LENGTH_LONG);
+                            View snackbarView = snackbar.getView();
+                            snackbarView.setBackgroundColor(ContextCompat.getColor(getBaseContext(),
+                                    R.color.LightBlueDark));
+                            snackbar.show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Snackbar snackbar;
+                    snackbar = Snackbar.make(view, R.string.errorUpdated,
+                            Snackbar.LENGTH_LONG);
+                    View snackbarView = snackbar.getView();
+                    snackbarView.setBackgroundColor(ContextCompat.getColor(getBaseContext(),
+                            R.color.LightBlueDark));
+                    snackbar.show();
+                    //Log.d("addEmployee", e.toString());
+                }
+            });
+        }
+        employeeAddPB.setVisibility(View.GONE);
     }
 }

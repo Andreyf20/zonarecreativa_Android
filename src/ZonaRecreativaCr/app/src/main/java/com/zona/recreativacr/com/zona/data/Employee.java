@@ -1,8 +1,11 @@
 package com.zona.recreativacr.com.zona.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
-public class Employee {
+public class Employee implements Parcelable {
     public String nombre, numeroSeguro, id, cedula;
     public Date vige, vence;
 
@@ -16,5 +19,40 @@ public class Employee {
     }
 
     public Employee() {
+    }
+
+    public static final Parcelable.Creator<Employee> CREATOR = new Parcelable.Creator<Employee>() {
+        public Employee createFromParcel(Parcel in) {
+            return new Employee(in);
+        }
+
+        public Employee[] newArray(int size) {
+            return new Employee[size];
+        }
+    };
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(nombre);
+        dest.writeString(numeroSeguro);
+        dest.writeString(id);
+        dest.writeString(cedula);
+        dest.writeLong(vence.getTime());
+        dest.writeLong(vige.getTime());
+    }
+
+    private Employee(Parcel in ) {
+        nombre = in .readString();
+        numeroSeguro  = in .readString();
+        id   = in .readString();
+        cedula = in .readString();
+        vence = new Date(in.readLong());
+        vige = new Date(in.readLong());
     }
 }

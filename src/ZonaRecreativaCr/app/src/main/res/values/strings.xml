@@ -46,6 +46,10 @@
     <string name="sendButton">Enviar</string>
     <string name="okCreated">Se creó correctamente</string>
     <string name="errorCreated">Ocurrió un error al crearlo</string>
+    <string name="okDeleted">Se eliminó correctamente</string>
+    <string name="errorDeleted">Ocurrió un error al eliminar</string>
+    <string name="okUpdated">Se actualizó correctamente</string>
+    <string name="errorUpdated">Ocurrión un error al actualizar</string>
     <string name="phoneNumber">Número de teléfono</string>
     <string name="price">Precio</string>
     <string name="description">Descripción</string>
