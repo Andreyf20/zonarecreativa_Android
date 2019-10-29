@@ -364,4 +364,63 @@ public class RecyclerViewConfig {
             return mMedicalStaffs.size();
         }
     }
+
+    public void setConfigPackages(RecyclerView recyclerView, Context context, List<Package> packages,
+                                  IClickListener listener){
+        mContext = context;
+        PackageAdapter mPackageAdapter = new PackageAdapter(packages, listener);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(mPackageAdapter);
+        DividerItemDecoration dividerItemDecoration =
+                new DividerItemDecoration(recyclerView.getContext(),
+                        layoutManager.getOrientation());
+        dividerItemDecoration.setDrawable(mContext.getResources().getDrawable(R.drawable.recyclerview_divider));
+        recyclerView.addItemDecoration(dividerItemDecoration);
+    }
+
+    class PackageItemView extends RecyclerView.ViewHolder implements View.OnClickListener
+    {
+        TextView nameTV, capacityTV, priceTV, activeTV, breakfastTV, lunchTV, coffeTV, typeTV, descrpTV;
+        IClickListener listener;
+
+        EmployeeItemView(View itemView, IClickListener listener) {
+            super(itemView);
+
+            this.listener = listener;
+            itemView.setOnClickListener(this);
+
+            nameTV = itemView.findViewById(R.id.employee_name_textView);
+            idTV = itemView.findViewById(R.id.employee_id_textView);
+            insuranceTV = itemView.findViewById(R.id.employee_insurance_textView);
+            expireTV = itemView.findViewById(R.id.employee_expire_textView);
+            vigeTV = itemView.findViewById(R.id.employee_vigencia_textView);
+        }
+
+        void bind(Employee employee){
+            // Formatting the info for easier view
+            /* Formatting the values */
+            String id = "Cédula: "+employee.cedula;
+            String insurance = "Número de seguro: "+employee.numeroSeguro;
+            /* Formatting the dates */
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat targetFormat =
+                    new SimpleDateFormat("MM-dd-yyyy");
+            String vence = "Vence: "+
+                    targetFormat.format(employee.vence);
+            String vige = "Vigencia: "+
+                    targetFormat.format(employee.vige);
+            // Setting the info
+            nameTV.setText(employee.nombre);
+            idTV.setText(id);
+            insuranceTV.setText(insurance);
+            expireTV.setText(vence);
+            vigeTV.setText(vige);
+        }
+
+        @Override
+        public void onClick(View v) {
+            listener.OnClickObject(getAdapterPosition());
+        }
+    }
+
 }

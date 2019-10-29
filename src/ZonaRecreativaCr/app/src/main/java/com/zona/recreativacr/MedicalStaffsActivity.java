@@ -20,7 +20,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.zona.recreativacr.com.zona.data.MealPlan;
 import com.zona.recreativacr.com.zona.data.MedicalStaff;
 import com.zona.recreativacr.com.zona.recyclerview.IClickListener;
 import com.zona.recreativacr.com.zona.recyclerview.RecyclerViewConfig;
@@ -48,7 +47,7 @@ public class MedicalStaffsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medical_staffs);
         contentView = findViewById(android.R.id.content);
-        medicalStaffRV = findViewById(R.id.medicalstaff_recyclerView);
+        medicalStaffRV = findViewById(R.id.package_recyclerView);
 
         this.setTitle("Personal Médico");
 

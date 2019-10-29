@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/medicalstaff_recyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/package_recyclerView" />
 
     <ProgressBar
         android:id="@+id/medicalstaff_progressBar"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/medicalstaff_recyclerView"
+        android:id="@+id/package_recyclerView"
         android:layout_width="374dp"
         android:layout_height="550dp"
         android:layout_marginStart="2dp"
