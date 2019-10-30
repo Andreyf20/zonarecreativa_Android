@@ -5,13 +5,13 @@ import android.os.Parcelable;
 
 public class Package implements Parcelable {
     public boolean active, breakfast, coffe, lunch;
-    public String capacity, descrip, id, imgURL, name;
+    public String capacity, descrip, id, imgURL, name, type;
     public String price, refImage, refThumbnail, thumbnailURL;
 
     public Package() {
     }
 
-    public Package(boolean breakfast, boolean coffe, boolean lunch, String capacity, String descrip, String id, String imgURL, String name, String price, String refImage, String refThumbnail, String thumbnailURL) {
+    public Package(boolean breakfast, boolean coffe, boolean lunch, String capacity, String descrip, String id, String imgURL, String name, String price, String refImage, String refThumbnail, String thumbnailURL, String type) {
         this.active = true;
         this.breakfast = breakfast;
         this.coffe = coffe;
@@ -25,6 +25,7 @@ public class Package implements Parcelable {
         this.refImage = refImage;
         this.refThumbnail = refThumbnail;
         this.thumbnailURL = thumbnailURL;
+        this.type = type;
     }
 
     public static final Parcelable.Creator<Package> CREATOR = new Parcelable.Creator<Package>() {
@@ -57,6 +58,7 @@ public class Package implements Parcelable {
         dest.writeString(refImage);
         dest.writeString(refThumbnail);
         dest.writeString(thumbnailURL);
+        dest.writeString(type);
     }
 
     private Package(Parcel in ) {
@@ -73,5 +75,6 @@ public class Package implements Parcelable {
         refImage = in.readString();
         refThumbnail = in.readString();
         thumbnailURL = in.readString();
+        type = in.readString();
     }
 }

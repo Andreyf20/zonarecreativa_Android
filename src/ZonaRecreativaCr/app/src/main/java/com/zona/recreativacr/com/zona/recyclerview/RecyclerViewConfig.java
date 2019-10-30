@@ -5,7 +5,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.zona.recreativacr.R;
@@ -13,6 +12,7 @@ import com.zona.recreativacr.com.zona.data.Employee;
 import com.zona.recreativacr.com.zona.data.MealPlan;
 import com.zona.recreativacr.com.zona.data.MedicalStaff;
 import com.zona.recreativacr.com.zona.data.Transport;
+import com.zona.recreativacr.com.zona.data.Package;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -384,42 +384,73 @@ public class RecyclerViewConfig {
         TextView nameTV, capacityTV, priceTV, activeTV, breakfastTV, lunchTV, coffeTV, typeTV, descrpTV;
         IClickListener listener;
 
-        EmployeeItemView(View itemView, IClickListener listener) {
+        PackageItemView(View itemView, IClickListener listener) {
             super(itemView);
 
             this.listener = listener;
             itemView.setOnClickListener(this);
 
-            nameTV = itemView.findViewById(R.id.employee_name_textView);
-            idTV = itemView.findViewById(R.id.employee_id_textView);
-            insuranceTV = itemView.findViewById(R.id.employee_insurance_textView);
-            expireTV = itemView.findViewById(R.id.employee_expire_textView);
-            vigeTV = itemView.findViewById(R.id.employee_vigencia_textView);
+            nameTV = itemView.findViewById(R.id.package_name_textView);
+            capacityTV = itemView.findViewById(R.id.package_capacity_textView);
+            priceTV = itemView.findViewById(R.id.package_price_textView);
+            activeTV = itemView.findViewById(R.id.package_activo_textView);
+            breakfastTV = itemView.findViewById(R.id.package_breakfast_textView);
+            lunchTV = itemView.findViewById(R.id.package_almuerzo_textView);
+            coffeTV = itemView.findViewById(R.id.package_cafe_textView);
+            typeTV = itemView.findViewById(R.id.package_type_textView);
+            descrpTV = itemView.findViewById(R.id.package_descr_textView);
         }
 
-        void bind(Employee employee){
+        void bind(Package packag){
             // Formatting the info for easier view
             /* Formatting the values */
-            String id = "Cédula: "+employee.cedula;
-            String insurance = "Número de seguro: "+employee.numeroSeguro;
-            /* Formatting the dates */
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat targetFormat =
-                    new SimpleDateFormat("MM-dd-yyyy");
-            String vence = "Vence: "+
-                    targetFormat.format(employee.vence);
-            String vige = "Vigencia: "+
-                    targetFormat.format(employee.vige);
+            String activo = "Activo: "+ (packag.active ? "activo" : "No activo");
+            String breakfast = "Desayuno: " + (packag.breakfast ? "activo" : "No activo");
+            String lunch = "Almuerzo: " + (packag.lunch ? "activo" : "No activo");
+            String coffe = "Café: " + (packag.coffe ? "activo" : "No activo");
             // Setting the info
-            nameTV.setText(employee.nombre);
-            idTV.setText(id);
-            insuranceTV.setText(insurance);
-            expireTV.setText(vence);
-            vigeTV.setText(vige);
+            nameTV.setText(packag.name);
+            capacityTV.setText(packag.capacity);
+            priceTV.setText(packag.price);
+            activeTV.setText(activo);
+            breakfastTV.setText(breakfast);
+            lunchTV.setText(lunch);
+            coffeTV.setText(coffe);
+            typeTV.setText(packag.type);
+            descrpTV.setText(packag.descrip);
         }
 
         @Override
         public void onClick(View v) {
             listener.OnClickObject(getAdapterPosition());
+        }
+    }
+
+    class PackageAdapter extends RecyclerView.Adapter<PackageItemView> {
+        private List<Package> mPackages;
+        private IClickListener listener;
+
+        public PackageAdapter(List<Package> packages, IClickListener listener) {
+            this.mPackages = packages;
+            this.listener = listener;
+        }
+
+        @NonNull
+        @Override
+        public PackageItemView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.package_list_item, parent, false);
+            return new PackageItemView(view, listener);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull PackageItemView holder, int position) {
+            holder.bind(mPackages.get(position));
+        }
+
+        @Override
+        public int getItemCount() {
+            return mPackages.size();
         }
     }
 
