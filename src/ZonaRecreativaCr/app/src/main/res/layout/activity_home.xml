@@ -51,6 +51,7 @@
         android:background="@drawable/rounded_corners"
         android:text="@string/adminPackages"
         android:textColor="@color/White"
+        android:onClick="goToPackages"
         app:layout_constraintBottom_toTopOf="@+id/meals_button"
         app:layout_constraintEnd_toStartOf="@+id/insurance_button"
         app:layout_constraintHorizontal_bias="0.5"

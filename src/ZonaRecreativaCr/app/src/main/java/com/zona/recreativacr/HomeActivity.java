@@ -27,6 +27,11 @@ public class HomeActivity extends AppCompatActivity {
         logoutBtn = findViewById(R.id.logout_button);
     }
 
+    public void goToPackages(View view){
+        Intent i = new Intent(getBaseContext(), PackagesActivity.class);
+        startActivity(i);
+    }
+
     public void goToEmployee(View view){
         Intent i = new Intent(getBaseContext(), EmployeesActivity.class);
         startActivity(i);

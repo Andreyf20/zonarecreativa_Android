@@ -110,8 +110,19 @@ public class EmployeesAddActivity extends AppCompatActivity {
             employee = getIntent().getParcelableExtra("employee");
             nombre.setText(employee.nombre);
             numeroSeguro.setText(employee.numeroSeguro);
-            vence.setText(employee.vence.toString());
-            vige.setText(employee.vige.toString());
+            String vi = "";
+            String ve = "";
+            SimpleDateFormat dateFormat = new SimpleDateFormat("d/M/yyyy");
+            try {
+                vi = dateFormat.format(employee.vige);
+                ve = dateFormat.format(employee.vence);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            vence.setText(ve);
+            vige.setText(vi);
+            //vence.setText(employee.vence.toString());
+            //vige.setText(employee.vige.toString());
             cedula.setText(employee.cedula);
         }
     }

@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/recyclerview_ripple"
+    android:clickable="true">
 
     <TextView
         android:id="@+id/package_name_textView"
@@ -99,9 +102,10 @@
         android:id="@+id/package_descr_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
         android:layout_marginTop="20dp"
-        android:text="TextView"
+        android:text="Descripcion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/package_type_textView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -67,7 +67,7 @@ public class RecyclerViewConfig {
             String insurance = "Número de seguro: "+employee.numeroSeguro;
             /* Formatting the dates */
             @SuppressLint("SimpleDateFormat") SimpleDateFormat targetFormat =
-                    new SimpleDateFormat("MM-dd-yyyy");
+                    new SimpleDateFormat("d/M/yyyy");
             String vence = "Vence: "+
                     targetFormat.format(employee.vence);
             String vige = "Vigencia: "+
@@ -408,15 +408,18 @@ public class RecyclerViewConfig {
             String breakfast = "Desayuno: " + (packag.breakfast ? "activo" : "No activo");
             String lunch = "Almuerzo: " + (packag.lunch ? "activo" : "No activo");
             String coffe = "Café: " + (packag.coffe ? "activo" : "No activo");
+            String precio = "Precio: " + packag.price;
+            String capacidad = "Capacidad: " + packag.capacity;
+            String tipo = "Tipo: " + packag.type;
             // Setting the info
             nameTV.setText(packag.name);
-            capacityTV.setText(packag.capacity);
-            priceTV.setText(packag.price);
+            capacityTV.setText(capacidad);
+            priceTV.setText(precio);
             activeTV.setText(activo);
             breakfastTV.setText(breakfast);
             lunchTV.setText(lunch);
             coffeTV.setText(coffe);
-            typeTV.setText(packag.type);
+            typeTV.setText(tipo);
             descrpTV.setText(packag.descrip);
         }
 

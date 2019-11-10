@@ -29,6 +29,7 @@
     <string name="addTransport">Agregar nuevo transporte</string>
     <string name="addMealPlan">Agregar nuevo plan alimenticio</string>
     <string name="addMedicalStaff">Agregar nuevo personal médico</string>
+    <string name="addPackage">Agregar nuevo paquete</string>
     <!--Employee strings-->
     <string name="employeeName">Nombre</string>
     <string name="employeeInsurance">Número de seguro</string>
