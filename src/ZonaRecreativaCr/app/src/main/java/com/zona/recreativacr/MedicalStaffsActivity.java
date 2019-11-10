@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -31,6 +32,7 @@ import java.util.Objects;
 public class MedicalStaffsActivity extends AppCompatActivity {
 
     RecyclerView medicalStaffRV;
+    ProgressBar medicalStaffPB;
     FirebaseFirestore mDatabase;
     Task<QuerySnapshot> medicalStaffQuerySnapshot;
     List<MedicalStaff> medicalStaffs = new ArrayList<>();
@@ -49,13 +51,13 @@ public class MedicalStaffsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_medical_staffs);
         contentView = findViewById(android.R.id.content);
         medicalStaffRV = findViewById(R.id.package_recyclerView);
-
+        medicalStaffPB = findViewById(R.id.medicalstaff_progressBar);
         this.setTitle("Personal Médico");
 
         readMedicalStaffs(new DataStatus<MedicalStaff>() {
             @Override
             public void DataIsLoaded(List<MedicalStaff> list) {
-                findViewById(R.id.medicalstaff_progressBar).setVisibility(View.GONE);
+                medicalStaffPB.setVisibility(View.GONE);
                 new RecyclerViewConfig().setConfigMedicalStaff(medicalStaffRV, getBaseContext(),
                         medicalStaffs, listener);
             }
@@ -103,6 +105,7 @@ public class MedicalStaffsActivity extends AppCompatActivity {
     }
 
     private void deleteMedicalStaff(final int position){
+        medicalStaffPB.setVisibility(View.VISIBLE);
         mDatabase.collection("PersonalMedico")
                 .document(medicalStaffs.get(position).id)
                 .delete()
@@ -131,6 +134,7 @@ public class MedicalStaffsActivity extends AppCompatActivity {
                 snackbar.show();
             }
         });
+        medicalStaffPB.setVisibility(View.GONE);
     }
 
     public void clickObject(final int position) {
@@ -149,5 +153,35 @@ public class MedicalStaffsActivity extends AppCompatActivity {
                 }
             }
         }).create().show();
+    }
+
+    public void updateMedicalStaff(View view){
+        medicalStaffPB.setVisibility(View.VISIBLE);
+        medicalStaffs.clear();
+        medicalStaffRV.invalidate();
+        Objects.requireNonNull(medicalStaffRV.getAdapter()).notifyDataSetChanged();
+        readMedicalStaffs(new DataStatus<MedicalStaff>() {
+            @Override
+            public void DataIsLoaded(List<MedicalStaff> list) {
+                medicalStaffPB.setVisibility(View.GONE);
+                new RecyclerViewConfig().setConfigMedicalStaff(medicalStaffRV, getBaseContext(),
+                        medicalStaffs, listener);
+            }
+
+            @Override
+            public void DataIsInserted() {
+
+            }
+
+            @Override
+            public void DataIsUpdated() {
+
+            }
+
+            @Override
+            public void DataIsDeleted() {
+
+            }
+        });
     }
 }

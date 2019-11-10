@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -32,6 +33,7 @@ import java.util.Objects;
 public class TransportsActivity extends AppCompatActivity {
 
     RecyclerView transportRV;
+    ProgressBar transportPB;
     FirebaseFirestore mDatabase;
     Task<QuerySnapshot> transportQuerySnapshot;
     List<Transport> transports = new ArrayList<>();
@@ -50,13 +52,13 @@ public class TransportsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_transports);
         contentView = findViewById(android.R.id.content);
         transportRV = findViewById(R.id.transport_recyclerView);
-
+        transportPB = findViewById(R.id.transport_progressBar);
         this.setTitle("Transporte");
 
         readTransports(new DataStatus<Transport>() {
             @Override
             public void DataIsLoaded(List<Transport> list) {
-                findViewById(R.id.transport_progressBar).setVisibility(View.GONE);
+                transportPB.setVisibility(View.GONE);
                 new RecyclerViewConfig().setConfigTransport(transportRV, getBaseContext(),
                         transports, listener);
             }
@@ -104,6 +106,7 @@ public class TransportsActivity extends AppCompatActivity {
     }
 
     private void deleteTransport(final int position){
+        transportPB.setVisibility(View.VISIBLE);
         mDatabase.collection("Transportes")
                 .document(transports.get(position).id)
                 .delete()
@@ -132,6 +135,7 @@ public class TransportsActivity extends AppCompatActivity {
                         snackbar.show();
             }
         });
+        transportPB.setVisibility(View.GONE);
     }
 
     public void clickObject(final int position) {
@@ -151,4 +155,35 @@ public class TransportsActivity extends AppCompatActivity {
             }
         }).create().show();
     }
+
+    public void updateTransports(View view) {
+        transportPB.setVisibility(View.VISIBLE);
+        transports.clear();
+        transportRV.invalidate();
+        Objects.requireNonNull(transportRV.getAdapter()).notifyDataSetChanged();
+        readTransports(new DataStatus<Transport>() {
+            @Override
+            public void DataIsLoaded(List<Transport> list) {
+                transportPB.setVisibility(View.GONE);
+                new RecyclerViewConfig().setConfigTransport(transportRV, getBaseContext(),
+                        transports, listener);
+            }
+
+            @Override
+            public void DataIsInserted() {
+
+            }
+
+            @Override
+            public void DataIsUpdated() {
+
+            }
+
+            @Override
+            public void DataIsDeleted() {
+
+            }
+        });
+    }
+
 }

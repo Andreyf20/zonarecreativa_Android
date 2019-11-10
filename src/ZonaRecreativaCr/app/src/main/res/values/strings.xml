@@ -23,6 +23,7 @@
     <string name="adminMedicalStaff">Personal Médico</string>
     <string name="adminTransport">Transporte</string>
     <string name="adminNewAdmin">Crear nuevo admin</string>
+    <string name="callMS">Llamar centro médico</string>
     <string name="logout">Salir</string>
     <!--Admin add new ... strings-->
     <string name="addEmployeeBtn">Agregar nuevo empleado</string>
@@ -54,4 +55,5 @@
     <string name="phoneNumber">Número de teléfono</string>
     <string name="price">Precio</string>
     <string name="description">Descripción</string>
+    <string name="updateList">Actualizar Lista</string>
 </resources>

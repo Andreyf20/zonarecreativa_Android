@@ -107,6 +107,7 @@ public class PackagesActivity extends AppCompatActivity {
     }
 
     private void deletePackage(final int position){
+        packagesPB.setVisibility(View.VISIBLE);
         mDatabase.collection("Paquetes")
                 .document(packages.get(position).id)
                 .delete()
@@ -135,6 +136,7 @@ public class PackagesActivity extends AppCompatActivity {
                 snackbar.show();
             }
         });
+        packagesPB.setVisibility(View.GONE);
     }
 
     public void clickObject(final int position) {
@@ -153,5 +155,35 @@ public class PackagesActivity extends AppCompatActivity {
                 }
             }
         }).create().show();
+    }
+
+    public void updatePackages(View view) {
+        packagesPB.setVisibility(View.VISIBLE);
+        packages.clear();
+        packagesRV.invalidate();
+        Objects.requireNonNull(packagesRV.getAdapter()).notifyDataSetChanged();
+        readPackages(new DataStatus<Package>() {
+            @Override
+            public void DataIsLoaded(List<Package> packages) {
+                packagesPB.setVisibility(View.GONE);
+                new RecyclerViewConfig().setConfigPackages(packagesRV, getBaseContext(),
+                        packages, listener);
+            }
+
+            @Override
+            public void DataIsInserted() {
+
+            }
+
+            @Override
+            public void DataIsUpdated() {
+
+            }
+
+            @Override
+            public void DataIsDeleted() {
+
+            }
+        });
     }
 }

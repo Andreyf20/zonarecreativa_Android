@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -32,6 +33,7 @@ import java.util.Objects;
 public class MealPlansActivity extends AppCompatActivity {
 
     RecyclerView mealplanRV;
+    ProgressBar mealplanPB;
     FirebaseFirestore mDatabase;
     Task<QuerySnapshot> mealplanQuerySnapshot;
     List<MealPlan> mealplans = new ArrayList<>();
@@ -50,13 +52,13 @@ public class MealPlansActivity extends AppCompatActivity {
         setContentView(R.layout.activity_meal_plans);
         contentView = findViewById(android.R.id.content);
         mealplanRV = findViewById(R.id.mealplan_recyclerView);
-
+        mealplanPB = findViewById(R.id.mealplan_progressBar);
         this.setTitle("Planes alimenticios");
 
         readMealPlans(new DataStatus<MealPlan>() {
             @Override
             public void DataIsLoaded(List<MealPlan> list) {
-                findViewById(R.id.mealplan_progressBar).setVisibility(View.GONE);
+                mealplanPB.setVisibility(View.GONE);
                 new RecyclerViewConfig().setConfigMealPlan(mealplanRV, getBaseContext(),
                         mealplans, listener);
             }
@@ -107,6 +109,7 @@ public class MealPlansActivity extends AppCompatActivity {
     }
 
     private void deleteMealPlan(final int position){
+        mealplanPB.setVisibility(View.VISIBLE);
         mDatabase.collection("Comidas")
                 .document(mealplans.get(position).id)
                 .delete()
@@ -135,6 +138,7 @@ public class MealPlansActivity extends AppCompatActivity {
                 snackbar.show();
             }
         });
+        mealplanPB.setVisibility(View.GONE);
     }
 
     public void clickObject(final int position) {
@@ -153,5 +157,35 @@ public class MealPlansActivity extends AppCompatActivity {
                 }
             }
         }).create().show();
+    }
+
+    public void updateMealPlans(View view){
+        mealplanPB.setVisibility(View.VISIBLE);
+        mealplans.clear();
+        mealplanRV.invalidate();
+        Objects.requireNonNull(mealplanRV.getAdapter()).notifyDataSetChanged();
+        readMealPlans(new DataStatus<MealPlan>() {
+            @Override
+            public void DataIsLoaded(List<MealPlan> list) {
+                mealplanPB.setVisibility(View.GONE);
+                new RecyclerViewConfig().setConfigMealPlan(mealplanRV, getBaseContext(),
+                        mealplans, listener);
+            }
+
+            @Override
+            public void DataIsInserted() {
+
+            }
+
+            @Override
+            public void DataIsUpdated() {
+
+            }
+
+            @Override
+            public void DataIsDeleted() {
+
+            }
+        });
     }
 }

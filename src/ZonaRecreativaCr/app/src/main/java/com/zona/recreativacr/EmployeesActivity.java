@@ -119,6 +119,7 @@ public class EmployeesActivity extends AppCompatActivity {
     }
 
     private void deleteEmployee(final int position){
+        employeePB.setVisibility(View.VISIBLE);
         mDatabase.collection("Empleados")
                 .document(employees.get(position).id)
                 .delete()
@@ -148,6 +149,7 @@ public class EmployeesActivity extends AppCompatActivity {
                 snackbar.show();
             }
         });
+        employeePB.setVisibility(View.GONE);
     }
 
     public void clickObject(final int position) {
@@ -170,6 +172,7 @@ public class EmployeesActivity extends AppCompatActivity {
 
     public void updateEmployee(View view){
         employeePB.setVisibility(View.VISIBLE);
+        employees.clear();
         employeeRV.invalidate();
         Objects.requireNonNull(employeeRV.getAdapter()).notifyDataSetChanged();
         readEmployees(new DataStatus<Employee>() {

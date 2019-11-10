@@ -27,7 +27,7 @@
         android:layout_marginTop="5dp"
         android:background="@drawable/rounded_corners"
         android:onClick="updateEmployee"
-        android:text="Actualizar lista"
+        android:text="@string/updateList"
         android:textColor="@color/White"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
