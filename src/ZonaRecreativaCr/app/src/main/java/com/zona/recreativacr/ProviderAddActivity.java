@@ -18,93 +18,73 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.zona.recreativacr.com.zona.data.Package;
+import com.zona.recreativacr.com.zona.data.Provider;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class PackagesAddActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    EditText nombreET, capacidadET, precioET, descripcionET;
-    Switch breakfastSW, coffeeSW, lunchSW, activeSW;
-    Spinner typeSP;
-    String type = "";
-    ProgressBar packagesAddPB;
-    Package packag = null;
+public class ProviderAddActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    EditText nombreET, emailET, phoneET, dirET, descET;
+    Spinner serviceSP;
+    String service = "";
+    ProgressBar providersAddPB;
+    Provider provider = null;
     FirebaseFirestore mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_packages_add);
-        setTitle("Agregar un nuevo paquete");
+        setContentView(R.layout.activity_provider_add);
+        setTitle("Agregar un nuevo Proveedor");
 
-        nombreET = findViewById(R.id.name_pq_editText);
-        capacidadET = findViewById(R.id.capacity_pq_editText);
-        precioET = findViewById(R.id.price_pq_editText);
-        typeSP = findViewById(R.id.type_spinner);
-        descripcionET = findViewById(R.id.descripcion_pq_editText);
-        breakfastSW = findViewById(R.id.breakfast_switch);
-        coffeeSW = findViewById(R.id.coffee_switch);
-        lunchSW = findViewById(R.id.lunch_switch);
-        activeSW = findViewById(R.id.active_switch);
-        packagesAddPB = findViewById(R.id.packageAdd_progressBar);
+        nombreET = findViewById(R.id.provider_name_editText);
+        emailET = findViewById(R.id.provider_email_editText);
+        phoneET = findViewById(R.id.provider_phone_editText);
+        dirET = findViewById(R.id.provider_direccion_editText);
+        descET = findViewById(R.id.provider_desc_editText);
+        providersAddPB = findViewById(R.id.providerAdd_progressBar);
+        serviceSP = findViewById(R.id.service_spinner);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.type, android.R.layout.simple_spinner_item);
-        typeSP.setAdapter(adapter);
-        typeSP.setOnItemSelectedListener(this);
+                R.array.service, android.R.layout.simple_spinner_item);
+        serviceSP.setAdapter(adapter);
+        serviceSP.setOnItemSelectedListener(this);
 
-        if(getIntent().hasExtra("package")) {
-            packag = getIntent().getParcelableExtra("package");
-            nombreET.setText(packag.name);
-            capacidadET.setText(packag.capacity);
-            precioET.setText(packag.price);
-            setSelectionSpinner(packag.type);
-            descripcionET.setText(packag.descrip);
-            if(packag.breakfast)
-                breakfastSW.setChecked(true);
-            if(packag.coffe)
-                coffeeSW.setChecked(true);
-            if(packag.lunch)
-                lunchSW.setChecked(true);
-            if(packag.active)
-                activeSW.setChecked(true);
+        if(getIntent().hasExtra("provider")) {
+            provider = getIntent().getParcelableExtra("provider");
+            nombreET.setText(provider.name);
+            emailET.setText(provider.email);
+            phoneET.setText(provider.numeroTelefono);
+            dirET.setText(provider.direccion);
+            descET.setText(provider.descripcion);
+            setSelectionSpinner(provider.tipoDeServicio);
         }
     }
 
-    public void addPackage(final View view){
+    public void addProvider(final View view){
         //TODO: agregar validaciones
-        packagesAddPB.setVisibility(View.VISIBLE);
+        providersAddPB.setVisibility(View.VISIBLE);
         mDatabase = FirebaseFirestore.getInstance();
         String name = nombreET.getText().toString();
-        String capacity = capacidadET.getText().toString();
-        String price = precioET.getText().toString();
-        String description = descripcionET.getText().toString();
-        boolean breakfast = breakfastSW.isChecked();
-        boolean coffee = coffeeSW.isChecked();
-        boolean lunch = lunchSW.isChecked();
-        boolean active = activeSW.isChecked();
+        String email = emailET.getText().toString();
+        String phone = phoneET.getText().toString();
+        String dir = dirET.getText().toString();
+        String desc = descET.getText().toString();
 
-        if(packag == null) {
+        if(provider == null) {
             String idDoc = UUID.randomUUID().toString();
 
             Map<String, Object> docData = new HashMap<>();
-            docData.put("active", active);
-            docData.put("breakfast", breakfast);
-            docData.put("capacity", capacity);
-            docData.put("coffe", coffee);
-            docData.put("descrip", description);
+            docData.put("descripcion", desc);
+            docData.put("direccion", dir);
+            docData.put("email", email);
             docData.put("id", idDoc);
-            docData.put("imgURL", "");
-            docData.put("lunch", lunch);
             docData.put("name", name);
-            docData.put("price", price);
-            docData.put("refImage", "");
-            docData.put("refThumbnail", "");
-            docData.put("thumbnailURL", "");
-            docData.put("type", type);
+            docData.put("numeroTelefono", phone);
+            docData.put("tipoDeServicio", service);
 
-            mDatabase.collection("Paquetes").document(idDoc).set(docData)
+            mDatabase.collection("Proveedores").document(idDoc).set(docData)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
@@ -116,13 +96,11 @@ public class PackagesAddActivity extends AppCompatActivity implements AdapterVie
                                     R.color.LightBlueDark));
                             snackbar.show();
                             nombreET.setText("");
-                            capacidadET.setText("");
-                            precioET.setText("");
-                            typeSP.setSelection(0);
-                            descripcionET.setText("");
-                            breakfastSW.setChecked(false);
-                            coffeeSW.setChecked(false);
-                            lunchSW.setChecked(false);
+                            emailET.setText("");
+                            phoneET.setText("");
+                            serviceSP.setSelection(0);
+                            dirET.setText("");
+                            descET.setText("");
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -138,22 +116,15 @@ public class PackagesAddActivity extends AppCompatActivity implements AdapterVie
             });
         } else {
             Map<String, Object> docData = new HashMap<>();
-            docData.put("active", active);
-            docData.put("breakfast", breakfast);
-            docData.put("capacity", capacity);
-            docData.put("coffe", coffee);
-            docData.put("descrip", description);
-            docData.put("id", packag.id);
-            docData.put("imgURL", packag.imgURL);
-            docData.put("lunch", lunch);
+            docData.put("descripcion", desc);
+            docData.put("direccion", dir);
+            docData.put("email", email);
+            docData.put("id", provider.id);
             docData.put("name", name);
-            docData.put("price", price);
-            docData.put("refImage", packag.refImage);
-            docData.put("refThumbnail", packag.refThumbnail);
-            docData.put("thumbnailURL", packag.thumbnailURL);
-            docData.put("type", type);
+            docData.put("numeroTelefono", phone);
+            docData.put("tipoDeServicio", service);
 
-            mDatabase.collection("Paquetes").document(packag.id)
+            mDatabase.collection("Proveedores").document(provider.id)
                     .set(docData)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -179,12 +150,12 @@ public class PackagesAddActivity extends AppCompatActivity implements AdapterVie
                 }
             });
         }
-        packagesAddPB.setVisibility(View.GONE);
+        providersAddPB.setVisibility(View.GONE);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        type = (String) parent.getSelectedItem();
+        service = (String) parent.getSelectedItem();
     }
 
     @Override
@@ -194,17 +165,41 @@ public class PackagesAddActivity extends AppCompatActivity implements AdapterVie
 
     private void setSelectionSpinner(String type) {
         switch (type) {
-            case "educativo":
-                typeSP.setSelection(1);
+            case "Transporte":
+                serviceSP.setSelection(1);
                 break;
-            case "científico":
-                typeSP.setSelection(2);
+            case "Recreación y Entretenimiento":
+                serviceSP.setSelection(2);
                 break;
-            case "recreativo":
-                typeSP.setSelection(3);
+            case "Eventos":
+                serviceSP.setSelection(3);
+                break;
+            case "Organización de evento":
+                serviceSP.setSelection(4);
+                break;
+            case "Limpieza":
+                serviceSP.setSelection(5);
+                break;
+            case "Maintenance":
+                serviceSP.setSelection(6);
+                break;
+            case "Repairs":
+                serviceSP.setSelection(7);
+                break;
+            case "Public Safety":
+                serviceSP.setSelection(8);
+                break;
+            case "Special Projects":
+                serviceSP.setSelection(9);
+                break;
+            case "Event Set up":
+                serviceSP.setSelection(10);
+                break;
+            case "Housekeeping":
+                serviceSP.setSelection(11);
                 break;
             default:
-                typeSP.setSelection(0);
+                serviceSP.setSelection(0);
                 break;
         }
     }

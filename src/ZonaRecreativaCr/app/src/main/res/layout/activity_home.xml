@@ -59,20 +59,34 @@
         app:layout_constraintTop_toBottomOf="@+id/logo_imageView" />
 
     <Button
-        android:id="@+id/logout_button"
+        android:id="@+id/provider_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="5dp"
         android:background="@drawable/rounded_corners"
-        android:onClick="logout"
-        android:text="@string/logout"
+        android:onClick="goToProvider"
+        android:text="@string/provider"
         android:textColor="@color/White"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/callMS_button"
         app:layout_constraintTop_toBottomOf="@+id/admin_button" />
+
+    <Button
+        android:id="@+id/logout_button2"
+        android:layout_width="201dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_corners"
+        android:onClick="logout"
+        android:text="@string/logout"
+        android:textColor="@color/White"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/provider_button" />
 
     <Button
         android:id="@+id/callMS_button"
@@ -82,10 +96,10 @@
         android:layout_marginTop="25dp"
         android:layout_marginEnd="5dp"
         android:background="@drawable/rounded_corners"
+        android:onClick="callMs"
         android:text="@string/callMS"
         android:textColor="@color/White"
-        android:onClick="callMs"
-        app:layout_constraintEnd_toStartOf="@+id/logout_button"
+        app:layout_constraintEnd_toStartOf="@+id/provider_button"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/transport_button" />

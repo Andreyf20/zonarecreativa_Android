@@ -24,6 +24,7 @@
     <string name="adminTransport">Transporte</string>
     <string name="adminNewAdmin">Crear nuevo admin</string>
     <string name="callMS">Llamar centro médico</string>
+    <string name="provider">Proveedores</string>
     <string name="logout">Salir</string>
     <!--Admin add new ... strings-->
     <string name="addEmployeeBtn">Agregar nuevo empleado</string>
@@ -31,6 +32,7 @@
     <string name="addMealPlan">Agregar nuevo plan alimenticio</string>
     <string name="addMedicalStaff">Agregar nuevo personal médico</string>
     <string name="addPackage">Agregar nuevo paquete</string>
+    <string name="addProvider">Agregar nuevo proveedor</string>
     <!--Employee strings-->
     <string name="employeeName">Nombre</string>
     <string name="employeeInsurance">Número de seguro</string>
@@ -56,4 +58,5 @@
     <string name="price">Precio</string>
     <string name="description">Descripción</string>
     <string name="updateList">Actualizar Lista</string>
+    <string name="dir">Dirección</string>
 </resources>

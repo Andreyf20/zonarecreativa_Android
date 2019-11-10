@@ -50,7 +50,7 @@ public class MedicalStaffsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medical_staffs);
         contentView = findViewById(android.R.id.content);
-        medicalStaffRV = findViewById(R.id.package_recyclerView);
+        medicalStaffRV = findViewById(R.id.medicalStaff_recyclerView);
         medicalStaffPB = findViewById(R.id.medicalstaff_progressBar);
         this.setTitle("Personal Médico");
 

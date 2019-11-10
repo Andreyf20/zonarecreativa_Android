@@ -16,6 +16,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:text="Name"
+        android:textColor="@color/LightBlueDark"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"

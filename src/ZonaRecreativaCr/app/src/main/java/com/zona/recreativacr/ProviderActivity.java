@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.zona.recreativacr.com.zona.data.Package;
+import com.zona.recreativacr.com.zona.data.Provider;
 import com.zona.recreativacr.com.zona.recyclerview.IClickListener;
 import com.zona.recreativacr.com.zona.recyclerview.RecyclerViewConfig;
 
@@ -29,37 +30,37 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class PackagesActivity extends AppCompatActivity {
-    RecyclerView packagesRV;
-    ProgressBar packagesPB;
+public class ProviderActivity extends AppCompatActivity {
+    RecyclerView providersRV;
+    ProgressBar providersPB;
     FirebaseFirestore mDatabase;
-    Task<QuerySnapshot> packageQuerySnapshot;
-    List<Package> packages = new ArrayList<>();
+    Task<QuerySnapshot> providersQuerySnapshot;
+    List<Provider> providers = new ArrayList<>();
     View contentView;
 
     IClickListener listener = new IClickListener() {
         @Override
         public void OnClickObject(int position) {
-            PackagesActivity.this.clickObject(position);
+            ProviderActivity.this.clickObject(position);
         }
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_packages);
-        this.setTitle(R.string.adminPackages);
+        setContentView(R.layout.activity_provider);
+        setTitle("Proveedores");
 
         contentView = findViewById(android.R.id.content);
-        packagesRV = findViewById(R.id.package_recyclerView);
-        packagesPB = findViewById(R.id.package_progressBar);
+        providersRV = findViewById(R.id.provider_recyclerView);
+        providersPB = findViewById(R.id.provider_progressBar);
 
-        readPackages(new DataStatus<Package>() {
+        readProviders(new DataStatus<Provider>() {
             @Override
-            public void DataIsLoaded(List<Package> packages) {
-                packagesPB.setVisibility(View.GONE);
-                new RecyclerViewConfig().setConfigPackages(packagesRV, getBaseContext(),
-                        packages, listener);
+            public void DataIsLoaded(List<Provider> provider) {
+                providersPB.setVisibility(View.GONE);
+                new RecyclerViewConfig().setConfigProviders(providersRV, getBaseContext(),
+                        providers, listener);
             }
 
             @Override
@@ -77,38 +78,36 @@ public class PackagesActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
-    public void readPackages (final DataStatus dataStatus) {
+    public void readProviders (final DataStatus dataStatus) {
         mDatabase = FirebaseFirestore.getInstance();
-        packageQuerySnapshot = mDatabase.collection("Paquetes")
+        providersQuerySnapshot = mDatabase.collection("Proveedores")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()) {
                             for(QueryDocumentSnapshot document : task.getResult()) {
-                                packages.add(document.toObject(Package.class));
+                                providers.add(document.toObject(Provider.class));
                             }
                             //Log.d("Empleado", employees.get(0).nombre);
-                            dataStatus.DataIsLoaded(packages);
-                        } else {
-                            Log.d("Empleado", "Task not successful");
+                            dataStatus.DataIsLoaded(providers);
                         }
                     }
                 });
     }
 
-    public void goToAddPackage(View view){
-        Intent i = new Intent(getBaseContext(), PackagesAddActivity.class);
+
+    public void goToAddProvider(View view){
+        Intent i = new Intent(getBaseContext(), ProviderAddActivity.class);
         startActivity(i);
     }
 
     private void deletePackage(final int position){
-        packagesPB.setVisibility(View.VISIBLE);
-        mDatabase.collection("Paquetes")
-                .document(packages.get(position).id)
+        providersPB.setVisibility(View.VISIBLE);
+        mDatabase.collection("Proveedores")
+                .document(providers.get(position).id)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -120,8 +119,8 @@ public class PackagesActivity extends AppCompatActivity {
                         snackbarView.setBackgroundColor(ContextCompat.getColor(getBaseContext(),
                                 R.color.LightBlueDark));
                         snackbar.show();
-                        packages.remove(position);
-                        Objects.requireNonNull(packagesRV.getAdapter()).notifyItemRemoved(position);
+                        providers.remove(position);
+                        Objects.requireNonNull(providersRV.getAdapter()).notifyItemRemoved(position);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -135,7 +134,7 @@ public class PackagesActivity extends AppCompatActivity {
                 snackbar.show();
             }
         });
-        packagesPB.setVisibility(View.GONE);
+        providersPB.setVisibility(View.GONE);
     }
 
     public void clickObject(final int position) {
@@ -145,8 +144,8 @@ public class PackagesActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(which == 0) {
-                    Intent intent = new Intent(getBaseContext(), PackagesAddActivity.class);
-                    intent.putExtra("package", packages.get(position));
+                    Intent intent = new Intent(getBaseContext(), ProviderAddActivity.class);
+                    intent.putExtra("provider", providers.get(position));
                     startActivity(intent);
                 }
                 else if(which == 1) {
@@ -156,17 +155,17 @@ public class PackagesActivity extends AppCompatActivity {
         }).create().show();
     }
 
-    public void updatePackages(View view) {
-        packagesPB.setVisibility(View.VISIBLE);
-        packages.clear();
-        packagesRV.invalidate();
-        Objects.requireNonNull(packagesRV.getAdapter()).notifyDataSetChanged();
-        readPackages(new DataStatus<Package>() {
+    public void updateProviders(View view) {
+        providersPB.setVisibility(View.VISIBLE);
+        providers.clear();
+        providersRV.invalidate();
+        Objects.requireNonNull(providersRV.getAdapter()).notifyDataSetChanged();
+        readProviders(new DataStatus<Provider>() {
             @Override
-            public void DataIsLoaded(List<Package> packages) {
-                packagesPB.setVisibility(View.GONE);
-                new RecyclerViewConfig().setConfigPackages(packagesRV, getBaseContext(),
-                        packages, listener);
+            public void DataIsLoaded(List<Provider> provider) {
+                providersPB.setVisibility(View.GONE);
+                new RecyclerViewConfig().setConfigProviders(providersRV, getBaseContext(),
+                        providers, listener);
             }
 
             @Override

@@ -60,19 +60,6 @@
         app:layout_constraintTop_toBottomOf="@+id/capacity_pq_editText" />
 
     <EditText
-        android:id="@+id/type_pq_editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:ems="10"
-        android:hint="Tipo"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/price_pq_editText" />
-
-    <EditText
         android:id="@+id/descripcion_pq_editText"
         android:layout_width="250dp"
         android:layout_height="114dp"
@@ -83,7 +70,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/type_pq_editText" />
+        app:layout_constraintTop_toBottomOf="@+id/type_spinner" />
 
     <ProgressBar
         android:id="@+id/packageAdd_progressBar"
@@ -96,6 +83,17 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/type_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/price_pq_editText" />
 
     <Switch
         android:id="@+id/breakfast_switch"

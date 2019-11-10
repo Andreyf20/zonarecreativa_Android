@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="service">
+        <item>Alimentación</item>
+        <item>Transporte</item>
+        <item>Recreación y Entretenimiento</item>
+        <item>Eventos</item>
+        <item>Organización de evento</item>
+        <item>Limpieza</item>
+        <item>Maintenance</item>
+        <item>Repairs</item>
+        <item>Public Safety</item>
+        <item>Special Projects</item>
+        <item>Event Set up</item>
+        <item>Housekeeping</item>
+    </string-array>
+</resources>

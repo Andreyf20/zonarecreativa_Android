@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -25,7 +24,7 @@ public class HomeActivity extends AppCompatActivity {
         mealBtn = findViewById(R.id.meals_button);
         medicalBtn = findViewById(R.id.medical_staff_button);
         transportBtn = findViewById(R.id.transport_button);
-        logoutBtn = findViewById(R.id.logout_button);
+        logoutBtn = findViewById(R.id.provider_button);
     }
 
     public void goToPackages(View view){
@@ -61,6 +60,11 @@ public class HomeActivity extends AppCompatActivity {
     public void logout(View view){
         FirebaseAuth.getInstance().signOut();
         this.finish();
+    }
+
+    public void goToProvider(View view){
+        Intent i = new Intent(getBaseContext(), ProviderActivity.class);
+        startActivity(i);
     }
 
     public void callMs(View view){

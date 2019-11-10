@@ -11,6 +11,7 @@ import com.zona.recreativacr.R;
 import com.zona.recreativacr.com.zona.data.Employee;
 import com.zona.recreativacr.com.zona.data.MealPlan;
 import com.zona.recreativacr.com.zona.data.MedicalStaff;
+import com.zona.recreativacr.com.zona.data.Provider;
 import com.zona.recreativacr.com.zona.data.Transport;
 import com.zona.recreativacr.com.zona.data.Package;
 
@@ -465,4 +466,84 @@ public class RecyclerViewConfig {
         }
     }
 
+    public void setConfigProviders(RecyclerView recyclerView, Context context, List<Provider> providers,
+                                   IClickListener listener){
+        mContext = context;
+        ProviderAdapter mProviderAdapter = new ProviderAdapter(providers, listener);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(mProviderAdapter);
+        DividerItemDecoration dividerItemDecoration =
+                new DividerItemDecoration(recyclerView.getContext(),
+                        layoutManager.getOrientation());
+        dividerItemDecoration.setDrawable(mContext.getResources().getDrawable(R.drawable.recyclerview_divider));
+        recyclerView.addItemDecoration(dividerItemDecoration);
+    }
+
+    class ProviderItemView extends RecyclerView.ViewHolder implements View.OnClickListener
+    {
+        TextView nameTV, descTV, dirTV, emailTV, phoneTV, serviceTV;
+        IClickListener listener;
+
+        ProviderItemView(View itemView, IClickListener listener) {
+            super(itemView);
+
+            this.listener = listener;
+            itemView.setOnClickListener(this);
+
+            nameTV = itemView.findViewById(R.id.provider_name_textView);
+            descTV = itemView.findViewById(R.id.provider_desc_textView);
+            dirTV = itemView.findViewById(R.id.provider_dir_textView);
+            emailTV = itemView.findViewById(R.id.provider_email_textView);
+            phoneTV = itemView.findViewById(R.id.provider_phone_textView);
+            serviceTV = itemView.findViewById(R.id.provider_service_textView);
+        }
+
+        void bind(Provider provider){
+            // Formatting the info for easier view
+            /* Formatting the values */
+            String telefono = "Teléfono: "+ provider.numeroTelefono;
+            String tipoServicio = "Tipo de servicio: " + provider.tipoDeServicio;
+            // Setting the info
+            nameTV.setText(provider.name);
+            descTV.setText(provider.descripcion);
+            dirTV.setText(provider.direccion);
+            emailTV.setText(provider.email);
+            phoneTV.setText(telefono);
+            serviceTV.setText(tipoServicio);
+        }
+
+        @Override
+        public void onClick(View v) {
+            listener.OnClickObject(getAdapterPosition());
+        }
+    }
+
+    class ProviderAdapter extends RecyclerView.Adapter<ProviderItemView> {
+        private List<Provider> mProviders;
+        private IClickListener listener;
+
+        public ProviderAdapter(List<Provider> providers, IClickListener listener) {
+            this.mProviders = providers;
+            this.listener = listener;
+        }
+
+        @NonNull
+        @Override
+        public ProviderItemView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.provider_list_item, parent, false);
+            return new ProviderItemView(view, listener);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ProviderItemView holder, int position) {
+            holder.bind(mProviders.get(position));
+        }
+
+        @Override
+        public int getItemCount() {
+            return mProviders.size();
+        }
+    }
 }
