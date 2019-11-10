@@ -316,7 +316,7 @@ public class RecyclerViewConfig {
 
     class MedicalStaffItemView extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        TextView nameTV, descriptionTV, phoneNumberTV;
+        TextView nameTV, descriptionTV, phoneNumberTV, provinceTV;
         IClickListener listener;
 
         MedicalStaffItemView(View itemView, IClickListener listener) {
@@ -328,6 +328,7 @@ public class RecyclerViewConfig {
             nameTV = itemView.findViewById(R.id.medicalstaff_name_textView);
             descriptionTV = itemView.findViewById(R.id.medicalstaff_descripcion_textView);
             phoneNumberTV = itemView.findViewById(R.id.medicalstaff_numeroTelefono_textView);
+            provinceTV = itemView.findViewById(R.id.provincia_textView);
         }
 
         void bind(MedicalStaff medicalStaff){
@@ -338,6 +339,7 @@ public class RecyclerViewConfig {
             nameTV.setText(medicalStaff.nombre);
             descriptionTV.setText(medicalStaff.descripcion);
             phoneNumberTV.setText(phoneNumber);
+            provinceTV.setText(medicalStaff.provincia);
         }
 
         @Override

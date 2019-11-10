@@ -4,13 +4,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class MedicalStaff implements Parcelable {
-    public String descripcion, nombre, id, numeroTelefono;
+    public String descripcion, nombre, id, numeroTelefono, provincia;
 
-    public MedicalStaff(String descripcion, String nombre, String id, String numeroTelefono) {
+    public MedicalStaff(String descripcion, String nombre, String id, String numeroTelefono, String provincia) {
         this.descripcion = descripcion;
         this.nombre = nombre;
         this.id = id;
         this.numeroTelefono = numeroTelefono;
+        this.provincia = provincia;
     }
 
     public MedicalStaff() {
@@ -37,6 +38,7 @@ public class MedicalStaff implements Parcelable {
         dest.writeString(id);
         dest.writeString(nombre);
         dest.writeString(numeroTelefono);
+        dest.writeString(provincia);
     }
 
     private MedicalStaff(Parcel in) {
@@ -44,5 +46,6 @@ public class MedicalStaff implements Parcelable {
         id = in.readString();
         nombre = in.readString();
         numeroTelefono = in.readString();
+        provincia = in.readString();
     }
 }

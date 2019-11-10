@@ -6,8 +6,11 @@ import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -19,8 +22,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class MedicalStaffsAddActivity extends AppCompatActivity {
+public class MedicalStaffsAddActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     EditText nombre, numeroTelefono, descripcion;
+    Spinner provinceSP;
+    String province = "San José";
     ProgressBar msAddPB;
     MedicalStaff medicalStaff = null;
 
@@ -37,12 +42,19 @@ public class MedicalStaffsAddActivity extends AppCompatActivity {
         numeroTelefono = findViewById(R.id.numeroTelefono_ms_editText);
         descripcion = findViewById(R.id.descripcion_ms_editText);
         msAddPB = findViewById(R.id.msAdd_progressBar);
+        provinceSP = findViewById(R.id.province_spinner);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.province, android.R.layout.simple_spinner_item);
+        provinceSP.setAdapter(adapter);
+        provinceSP.setOnItemSelectedListener(this);
 
         if(getIntent().hasExtra("medicalstaff")) {
             medicalStaff = getIntent().getParcelableExtra("medicalstaff");
             nombre.setText(medicalStaff.nombre);
             numeroTelefono.setText(medicalStaff.numeroTelefono);
             descripcion.setText(medicalStaff.descripcion);
+            setSelectionSpinner(medicalStaff.provincia);
         }
     }
 
@@ -62,6 +74,7 @@ public class MedicalStaffsAddActivity extends AppCompatActivity {
             docData.put("id", idDoc);
             docData.put("nombre", name);
             docData.put("numeroTelefono", phoneNumber);
+            docData.put("provincia", province);
 
             mDatabase.collection("PersonalMedico").document(idDoc).set(docData)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -96,6 +109,7 @@ public class MedicalStaffsAddActivity extends AppCompatActivity {
             docData.put("id", medicalStaff.id);
             docData.put("nombre", name);
             docData.put("numeroTelefono", phoneNumber);
+            docData.put("provincia", province);
 
             mDatabase.collection("PersonalMedico").document(medicalStaff.id)
                     .set(docData)
@@ -125,5 +139,41 @@ public class MedicalStaffsAddActivity extends AppCompatActivity {
 
         }
         msAddPB.setVisibility(View.GONE);
+    }
+
+    private void setSelectionSpinner(String type) {
+        switch (type) {
+            case "Alajuela":
+                provinceSP.setSelection(1);
+                break;
+            case "Cartago":
+                provinceSP.setSelection(2);
+                break;
+            case "Limón":
+                provinceSP.setSelection(3);
+                break;
+            case "Puntarenas":
+                provinceSP.setSelection(4);
+                break;
+            case "Guanacaste":
+                provinceSP.setSelection(5);
+                break;
+            case "Heredia":
+                provinceSP.setSelection(6);
+                break;
+            default:
+                provinceSP.setSelection(0);
+                break;
+        }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        province = (String) provinceSP.getSelectedItem();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        parent.setSelection(0);
     }
 }

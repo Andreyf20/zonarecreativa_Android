@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="province">
+        <item>San José</item>
+        <item>Alajuela</item>
+        <item>Cartago</item>
+        <item>Limón</item>
+        <item>Puntarenas</item>
+        <item>Guanacaste</item>
+        <item>Heredia</item>
+    </string-array>
+</resources>
