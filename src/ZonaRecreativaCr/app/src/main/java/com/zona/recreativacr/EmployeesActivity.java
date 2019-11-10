@@ -118,7 +118,7 @@ public class EmployeesActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    private void deleteEmployee(int position){
+    private void deleteEmployee(final int position){
         mDatabase.collection("Empleados")
                 .document(employees.get(position).id)
                 .delete()
@@ -132,6 +132,8 @@ public class EmployeesActivity extends AppCompatActivity {
                         snackbarView.setBackgroundColor(ContextCompat.getColor(getBaseContext(),
                                 R.color.LightBlueDark));
                         snackbar.show();
+                        employees.remove(position);
+                        Objects.requireNonNull(employeeRV.getAdapter()).notifyItemRemoved(position);
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -164,5 +166,34 @@ public class EmployeesActivity extends AppCompatActivity {
                 }
             }
         }).create().show();
+    }
+
+    public void updateEmployee(View view){
+        employeePB.setVisibility(View.VISIBLE);
+        employeeRV.invalidate();
+        Objects.requireNonNull(employeeRV.getAdapter()).notifyDataSetChanged();
+        readEmployees(new DataStatus<Employee>() {
+            @Override
+            public void DataIsLoaded(List<Employee> employees) {
+                employeePB.setVisibility(View.GONE);
+                new RecyclerViewConfig().setConfigEmployee(employeeRV, getBaseContext(),
+                        employees, listener);
+            }
+
+            @Override
+            public void DataIsInserted() {
+
+            }
+
+            @Override
+            public void DataIsUpdated() {
+
+            }
+
+            @Override
+            public void DataIsDeleted() {
+
+            }
+        });
     }
 }

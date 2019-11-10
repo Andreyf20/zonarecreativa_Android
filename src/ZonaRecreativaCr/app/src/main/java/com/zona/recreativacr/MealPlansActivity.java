@@ -27,6 +27,7 @@ import com.zona.recreativacr.com.zona.recyclerview.RecyclerViewConfig;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MealPlansActivity extends AppCompatActivity {
 
@@ -105,7 +106,7 @@ public class MealPlansActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    private void deleteMealPlan(int position){
+    private void deleteMealPlan(final int position){
         mDatabase.collection("Comidas")
                 .document(mealplans.get(position).id)
                 .delete()
@@ -119,7 +120,8 @@ public class MealPlansActivity extends AppCompatActivity {
                         snackbarView.setBackgroundColor(ContextCompat.getColor(getBaseContext(),
                                 R.color.LightBlueDark));
                         snackbar.show();
-
+                        mealplans.remove(position);
+                        Objects.requireNonNull(mealplanRV.getAdapter()).notifyItemRemoved(position);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override

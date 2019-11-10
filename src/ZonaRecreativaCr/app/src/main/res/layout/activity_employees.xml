@@ -20,6 +20,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/employee_recyclerView" />
 
+    <Button
+        android:id="@+id/updateEmployee_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rounded_corners"
+        android:onClick="updateEmployee"
+        android:text="Actualizar lista"
+        android:textColor="@color/White"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addEmployee_button" />
+
     <ProgressBar
         android:id="@+id/employee_progressBar"
         style="?android:attr/progressBarStyle"

@@ -27,6 +27,7 @@ import com.zona.recreativacr.com.zona.recyclerview.RecyclerViewConfig;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class TransportsActivity extends AppCompatActivity {
 
@@ -102,7 +103,7 @@ public class TransportsActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    private void deleteTransport(int position){
+    private void deleteTransport(final int position){
         mDatabase.collection("Transportes")
                 .document(transports.get(position).id)
                 .delete()
@@ -116,7 +117,8 @@ public class TransportsActivity extends AppCompatActivity {
                         snackbarView.setBackgroundColor(ContextCompat.getColor(getBaseContext(),
                                 R.color.LightBlueDark));
                         snackbar.show();
-
+                        transports.remove(position);
+                        Objects.requireNonNull(transportRV.getAdapter()).notifyItemRemoved(position);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override

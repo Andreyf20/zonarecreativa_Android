@@ -28,6 +28,7 @@ import com.zona.recreativacr.com.zona.recyclerview.RecyclerViewConfig;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PackagesActivity extends AppCompatActivity {
     RecyclerView packagesRV;
@@ -105,7 +106,7 @@ public class PackagesActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    private void deleteEmployee(int position){
+    private void deletePackage(final int position){
         mDatabase.collection("Paquetes")
                 .document(packages.get(position).id)
                 .delete()
@@ -119,7 +120,8 @@ public class PackagesActivity extends AppCompatActivity {
                         snackbarView.setBackgroundColor(ContextCompat.getColor(getBaseContext(),
                                 R.color.LightBlueDark));
                         snackbar.show();
-
+                        packages.remove(position);
+                        Objects.requireNonNull(packagesRV.getAdapter()).notifyItemRemoved(position);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -147,7 +149,7 @@ public class PackagesActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else if(which == 1) {
-                    deleteEmployee(position);
+                    deletePackage(position);
                 }
             }
         }).create().show();

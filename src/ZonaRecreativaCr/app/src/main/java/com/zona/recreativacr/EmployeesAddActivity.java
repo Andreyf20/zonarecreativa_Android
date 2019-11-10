@@ -119,6 +119,8 @@ public class EmployeesAddActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            ven = employee.vence;
+            vig = employee.vige;
             vence.setText(ve);
             vige.setText(vi);
             //vence.setText(employee.vence.toString());

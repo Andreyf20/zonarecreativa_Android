@@ -24,6 +24,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class RecyclerViewConfig {
     private Context mContext;
+    //private static RecyclerViewConfig rvc;
+    //public EmployeeAdapter mEmployeeAdapter;
+
+    /*public static RecyclerViewConfig getInstace(){
+        if(rvc == null)
+            rvc = new RecyclerViewConfig();
+        return rvc;
+    }*/
 
     /*
     Employees config settings

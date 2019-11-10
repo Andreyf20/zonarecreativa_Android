@@ -26,6 +26,7 @@ import com.zona.recreativacr.com.zona.recyclerview.RecyclerViewConfig;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MedicalStaffsActivity extends AppCompatActivity {
 
@@ -101,7 +102,7 @@ public class MedicalStaffsActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    private void deleteMedicalStaff(int position){
+    private void deleteMedicalStaff(final int position){
         mDatabase.collection("PersonalMedico")
                 .document(medicalStaffs.get(position).id)
                 .delete()
@@ -115,7 +116,8 @@ public class MedicalStaffsActivity extends AppCompatActivity {
                         snackbarView.setBackgroundColor(ContextCompat.getColor(getBaseContext(),
                                 R.color.LightBlueDark));
                         snackbar.show();
-
+                        medicalStaffs.remove(position);
+                        Objects.requireNonNull(medicalStaffRV.getAdapter()).notifyItemRemoved(position);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
