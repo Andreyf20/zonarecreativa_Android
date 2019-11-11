@@ -59,4 +59,5 @@
     <string name="description">Descripción</string>
     <string name="updateList">Actualizar Lista</string>
     <string name="dir">Dirección</string>
+    <string name="uploadImg">Subir imagen</string>
 </resources>
