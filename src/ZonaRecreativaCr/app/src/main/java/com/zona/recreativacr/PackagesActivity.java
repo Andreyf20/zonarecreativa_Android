@@ -21,6 +21,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.zona.recreativacr.com.zona.data.Package;
 import com.zona.recreativacr.com.zona.recyclerview.IClickListener;
 import com.zona.recreativacr.com.zona.recyclerview.RecyclerViewConfig;
@@ -107,6 +109,12 @@ public class PackagesActivity extends AppCompatActivity {
 
     private void deletePackage(final int position){
         packagesPB.setVisibility(View.VISIBLE);
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference imgRef = storageRef.child("packages/"+packages.get(position).id+"/"+
+                packages.get(position).id+".png");
+        imgRef.delete();
+
         mDatabase.collection("Paquetes")
                 .document(packages.get(position).id)
                 .delete()
